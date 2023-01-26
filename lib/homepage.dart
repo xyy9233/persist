@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 
+
 //手势检测
 /*class _GestureTestState extends State<GestureTest> {
   String _operation = "No Gesture detected!"; //保存事件名

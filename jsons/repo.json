@@ -1,0 +1,16 @@
+{
+  "user_id": 1000001,
+  "phone": "17652805389",
+  "email": "1768765226@qq.com",
+  "user_name": "wind",
+  "user_pwd": "password",
+
+  "habit_id": 10001,
+  "target": "按时睡觉",
+  "consist_day": 21,
+  "complete_day": 0,
+  "avatar": "喵",
+  "sound": "",
+  "statement": "processing",
+  "x-api-key": "string"
+}
