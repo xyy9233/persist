@@ -1,30 +1,21 @@
-import 'dart:js';
-import 'dart:async';
-import 'package:path/path.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
-import 'package:persist/models/user.dart';
+import 'SplashPage.dart';
 import 'common/Global.dart';
-import 'homepage.dart';
 import 'package:persist/loginpage.dart';
-import 'models/profile.dart';
-
 
 void main() {
-  Global.init().then((e) => runApp(MyApp()));
+  Global.init().then((e) =>runApp(MaterialApp(home:SplashPage(),)));
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Prisist喵',
         theme: ThemeData(
-          primarySwatch: Colors.deepPurple,
+          primarySwatch: Colors.blue,
         ),
         routes: {
           "/": (context) => LoginPage(title: "登录"), //(title: "登录"),
