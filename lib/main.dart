@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'SplashPage.dart';
 import 'common/Global.dart';
-import 'package:persist/loginpage.dart';
+import 'mainPage/homepage.dart';
 
 void main() {
   Global.init().then((e) =>runApp(MaterialApp(home:SplashPage(),)));
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         routes: {
-          "/": (context) => LoginPage(title: "登录"), //(title: "登录"),
+          "/": (context) => MyHomePage(token: 'token',),//LoginPage(title: "登录"),
         });
   }
 

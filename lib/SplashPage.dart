@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:persist/loginpage.dart';
-import 'package:flutter/cupertino.dart';
+
+
 
 class SplashPage extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _SplashPageState extends State<SplashPage> {
         _opacity=0;
       });
       Timer(Duration(milliseconds: 0),(){
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage(title: "登录")));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage(title: "登录", key: UniqueKey(),)));
       }
         );
       });

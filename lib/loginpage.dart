@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'Screenhelper.dart';
-import 'homepage.dart';
+import 'package:persist/Registration.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'mainPage/homepage.dart';
 
 ///数据持久化：
 class User {
@@ -26,7 +28,7 @@ Future<User> getUserProfile() async {
 ///
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key, required this.title}) : super(key: key);
+  LoginPage({required Key key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -34,8 +36,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  //final GlobalKey _formKey = GlobalKey<FormState>();
-  late String _name, _password;
+  final _formKey = GlobalKey<FormState>();
+  String _name = "test";
+  String _password = "123";
   bool _isObscure = true;
   Color _eyeColor = Colors.white;
 
@@ -43,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     //ScreenHelper.int(context);
     return Scaffold(
+      key: _formKey,
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 0),
         children: [
@@ -64,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
             width: 30,
             height: 29,
             alignment: Alignment.centerRight,
-            padding: const EdgeInsets.only(top: 1,right: 10,bottom: 0),
+            padding: const EdgeInsets.only(top: 1, right: 10, bottom: 0),
             child: getImage("assets/huahua.png"),
           ),
           const SizedBox(height: 10),
@@ -81,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           //const SizedBox(height: 40),
           //buildRegisterText(context), // 注册
+          buildRegisterText(context),
           buildLoginButton(context), // 登录按钮
         ],
       ),
@@ -99,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 */
 
-/*  Widget buildRegisterText(context) {
+ Widget buildRegisterText(context) {
     return Center(
       child: Padding(
         padding: EdgeInsets.fromLTRB(11, 0, 11, 0),
@@ -108,16 +113,20 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             const Text('没有账号?'),
             GestureDetector(
-              child: const Text('点击注册', style: TextStyle(color: Colors.green)),
-              onTap: () {
+              child: const Text('长按注册', style: TextStyle(color: Colors.blueAccent)),
+              onLongPress: () {
                 print("点击注册");
-              },
-            )
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegistrationPage(title: "注册")),
+                );
+              }
+              )
           ],
         ),
       ),
     );
-  }*/
+  }
 
   Widget buildLoginButton(BuildContext context) {
     return Container(
@@ -130,38 +139,22 @@ class _LoginPageState extends State<LoginPage> {
       //padding: EdgeInsets.fromLTRB(36, 0, 36, 42),
       child: ElevatedButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Color.fromRGBO(73,108,251,1)),
+            backgroundColor:
+                MaterialStateProperty.all(Color.fromRGBO(73, 108, 251, 1)),
             textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16)),
           ),
           child: Text(
-              'Log in',
-
+            'Log in',
           ),
-          onPressed: ()
-          /*{
-            // 表单校验通过才会继续执行
-            if ((_formKey.currentState as FormState).validate()) {
-              (_formKey.currentState as FormState).save();
-              //TOD0 执行登录方法
-              print('user_name: $_name, user_password: $_password');
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return MyHomePage();
-              }));
-            }
-          },*/
-        {
-        Navigator.push(
-        context,
-        new MaterialPageRoute(builder: (context) => new MyHomePage()),
-        );
-        }
-        ),
-      );
+          onPressed: () {
+            _submitForm();
+          }),
+    );
   }
 
   Widget buildForgetpasswordText(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 1,right: 30,bottom: 0),
+      padding: const EdgeInsets.only(top: 1, right: 30, bottom: 0),
       child: Align(
         alignment: Alignment.centerRight,
         child: TextButton(
@@ -171,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
           },
           child: const Text("Forget password?",
               style: TextStyle(
-                  fontSize: 14, color: Color.fromRGBO(207,207,207,1))),
+                  fontSize: 14, color: Color.fromRGBO(207, 207, 207, 1))),
         ),
       ),
     );
@@ -187,36 +180,33 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         child: TextFormField(
-        obscureText: _isObscure, // 是否显示文字
-        onSaved: (v) => _password = v!,
-        validator: (v) {
-          if (v!.isEmpty) {
-            return '请输入密码';
-          }
-        },
+            obscureText: _isObscure, // 是否显示文字
+            onSaved: (v) => _password = v!,
+            validator: (v) {
+              if (v!.isEmpty) {
+                return '请输入密码';
+              }
+            },
             style: TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-            labelText: "password",
-            contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 10),
-            //border: OutlineInputBorder(borderRadius: BorderRadius.circular(32)),
-            suffixIcon: IconButton(
-              icon: Icon(
-                Icons.remove_red_eye,
-                color: _eyeColor,
-              ),
-              onPressed: () {
-                // 修改 state 内部变量, 且需要界面内容更新, 需要使用 setState()
-                setState(() {
-                  _isObscure = !_isObscure;
-                  _eyeColor = (_isObscure
-                      ? Color.fromRGBO(73, 108, 251, 1)
-                      : Theme.of(context).iconTheme.color)!;
-                });
-              },
-            )
-        )
-        )
-    );
+            decoration: InputDecoration(
+                labelText: "password",
+                contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 10),
+                //border: OutlineInputBorder(borderRadius: BorderRadius.circular(32)),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    Icons.remove_red_eye,
+                    color: _eyeColor,
+                  ),
+                  onPressed: () {
+                    // 修改 state 内部变量, 且需要界面内容更新, 需要使用 setState()
+                    setState(() {
+                      _isObscure = !_isObscure;
+                      _eyeColor = (_isObscure
+                          ? Color.fromRGBO(73, 108, 251, 1)
+                          : Theme.of(context).iconTheme.color)!;
+                    });
+                  },
+                ))));
   }
 
   Widget buildnameTextField() {
@@ -231,9 +221,8 @@ class _LoginPageState extends State<LoginPage> {
         child: TextFormField(
           style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
-              labelText: 'Username',
-
-              contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 10),
+            labelText: 'Username',
+            contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 10),
           ),
           validator: (v) {
             var nameReg = RegExp(r"^[a-zA-Z0-9]+$");
@@ -242,7 +231,9 @@ class _LoginPageState extends State<LoginPage> {
             }
           },
           onSaved: (v) => _name = v!,
-        ));
+
+        )
+    );
   }
 
   Widget buildTitle() {
@@ -260,5 +251,44 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget getImage(String imageUrl) {
     return Image.asset(imageUrl);
+  }
+
+  _submitForm() async {
+    print(_name);
+    print(_password);
+    if (_name.isEmpty) {
+      print("请输入用户名");
+      return;
+    }
+    if (_password.isEmpty) {
+      print("请输入密码");
+      return;
+    }
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      print(_name);
+      print(_password);
+      print('Sending request with name: $_name and password: $_password');
+      final response = await http.post(
+        'http://8.130.41.221:8081' as Uri,
+        body: {'name': _name, 'password': _password},
+      );
+      print(response.statusCode);
+      final responseJson = json.decode(response.body);
+      if (responseJson['status'] == 'success') {
+        final token = responseJson['token'];
+        print('服务器响应: ${response.statusCode}');
+        print("!!!!!!!!!!!!!!!!!!!!!!!!");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyHomePage(token: token),
+          ),
+        );
+      } else {
+// Show error message
+        print("戳啦!!!");
+      }
+    }
   }
 }
