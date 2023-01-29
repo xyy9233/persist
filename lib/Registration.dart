@@ -1,11 +1,10 @@
-import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:persist/Registration.dart';
+import 'package:persist/loginpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
-import 'ChangeNotifierProvider.dart';
+
 import 'mainPage/homepage.dart';
-import 'package:provider/provider.dart';
+
 
 ///数据持久化：
 class User {
@@ -29,20 +28,71 @@ Future<User> getUserProfile() async {
 
 ///
 
-class LoginPage extends StatefulWidget {
-  LoginPage({required Key key, required this.title}) : super(key: key);
+class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegistrationPageState createState() => _RegistrationPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegistrationPageState extends State<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
- //final nameData = Provider.of<NameData>(context);
+  String _name = "";
   String _password = "";
   bool _isObscure = true;
   Color _eyeColor = Colors.white;
+
+/*  _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      final response = await http.post(
+        'http://8.130.41.221:8081/web/register.html' as Uri,
+        body: {'name': _name, 'password': _password},
+      );
+      final responseJson = json.decode(response.body);
+      if (responseJson['status'] == 'success') {
+        final token = responseJson['token'];
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyHomePage(token: token),
+          ),
+        );
+      } else {
+        // Show error message
+        print("戳啦!!!");
+      }
+    }
+  }*/
+
+  Future _submitForm() async {
+    var dio = Dio();
+    var response = await dio.post(
+        "http://8.130.41.221:8081/web/register.html",
+        data: {"name": _name,
+          "password": _password}
+    );
+    if (_name.isEmpty) {
+      print("请输入用户名");
+      return;
+    }
+    if (_password.isEmpty) {
+      print("请输入密码");
+      return;
+    }
+    if (response.statusCode == 200) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MyHomePage(token: "w"),
+        ),
+      );
+    } else {
+      print(response.data);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,26 +135,50 @@ class _LoginPageState extends State<LoginPage> {
             alignment: Alignment.centerLeft,
             child: getImage("assets/dahua.png"),
           ),
-          //const SizedBox(height: 40),
-          //buildRegisterText(context), // 注册
           buildRegisterText(context),
-          buildLoginButton(context), // 登录按钮
+          buildRegistrationButton(context), // 注册按钮
         ],
       ),
     );
   }
 
-  /*
+  @override
+/*
   void initState() {
     // 自动填充上次登录的用户名，填充后将焦点定位到密码输入框
-    _unameController.text = Global.profile.lastLogin ?? "";
+    _unameController.text = Global.profile.lastRegistration ?? "";
     if (_unameController.text.isNotEmpty) {
       _nameAutoFocus = false;
     }
     super.initState();
   }
 */
-  Widget buildLoginButton(BuildContext context) {
+
+  Widget buildRegisterText(context) {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(11, 0, 11, 0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('已有账号?'),
+            GestureDetector(
+              child: const Text('长按登录', style: TextStyle(color: Colors.blueAccent)),
+              onLongPress: () {
+                print("登录");
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage(title: "登录", key: UniqueKey(),))
+                );
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildRegistrationButton(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(25, 5, 25, 20),
       width: 321,
@@ -120,39 +194,13 @@ class _LoginPageState extends State<LoginPage> {
             textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16)),
           ),
           child: Text(
-            'Log in',
+            'Registration',
           ),
           onPressed: () {
             _submitForm();
           }),
     );
   }
-
-
-  Widget buildRegisterText(context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(11, 0, 11, 0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('没有账号?'),
-            GestureDetector(
-              child: const Text('长按注册', style: TextStyle(color: Colors.blueAccent)),
-              onLongPress: () {
-                print("点击注册");
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RegistrationPage(title: "注册")),
-                );
-              }
-              )
-          ],
-        ),
-      ),
-    );
-  }
-
 
   Widget buildForgetpasswordText(BuildContext context) {
     return Padding(
@@ -188,9 +236,7 @@ class _LoginPageState extends State<LoginPage> {
               if (v!.isEmpty) {
                 return '请输入密码';
               }
-              return null;
             },
-            onChanged: (value) => _password = value,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 labelText: "password",
@@ -210,14 +256,10 @@ class _LoginPageState extends State<LoginPage> {
                           : Theme.of(context).iconTheme.color)!;
                     });
                   },
-                )
-            )
-        )
-    );
+                ))));
   }
 
   Widget buildnameTextField() {
-    final nameData = Provider.of<NameData>(context);
     return Container(
         height: 45,
         width: 321,
@@ -230,19 +272,16 @@ class _LoginPageState extends State<LoginPage> {
           style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
             labelText: 'Username',
-            contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+            contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 10),
           ),
           validator: (v) {
             var nameReg = RegExp(r"^[a-zA-Z0-9]+$");
             if (!nameReg.hasMatch(v!)) {
               return '只能输入字母和数字';
             }
-            return null;
           },
-          onSaved: (v) => nameData.name = v!,
-          onChanged: (value) => nameData.name = value
-        )
-    );
+          onSaved: (v) => _name = v!,
+        ));
   }
 
   Widget buildTitle() {
@@ -250,54 +289,15 @@ class _LoginPageState extends State<LoginPage> {
         padding: EdgeInsets.fromLTRB(57, 340, 60, 0),
         child: Center(
             child: Text(
-          'Persist',
-          style: TextStyle(
-            color: Colors.deepPurple,
-            fontSize: 47,
-          ),
-        )));
+              'Persist',
+              style: TextStyle(
+                color: Colors.deepPurple,
+                fontSize: 47,
+              ),
+            )));
   }
 
   Widget getImage(String imageUrl) {
     return Image.asset(imageUrl);
-  }
-
-  _submitForm() async {
-    final nameData = Provider.of<NameData>(context);
-    print(nameData.name);
-    print(_password);
-    if (nameData.name.isEmpty) {
-      print("请输入用户名");
-      return;
-    }
-    if (_password.isEmpty) {
-      print("请输入密码");
-      return;
-    }
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      print(nameData.name);
-      print(_password);
-      print('Sending request with name: $nameData.name and password: $_password');
-      final response = await http.post(
-        'http://8.130.41.221:8081' as Uri,
-        body: {'name': nameData.name, 'password': _password},
-      );
-      print(response.statusCode);
-      final responseJson = json.decode(response.body);
-      if (responseJson['status'] == 'success') {
-        final token = responseJson['token'];
-        print('服务器响应: ${response.statusCode}');
-        print("!!!!!!!!!!!!!!!!!!!!!!!!");
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MyHomePage(token: token),
-          ),
-        );
-      } else {
-        print("戳啦!!!");
-      }
-    }
   }
 }
