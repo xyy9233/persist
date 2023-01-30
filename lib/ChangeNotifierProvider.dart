@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 
-class NameData extends ChangeNotifier {
-  String _name="";
+class GlobalData extends ChangeNotifier{
+  String cutename;
+  String elementName;
+  int elementTime;
+  int elementCount;
 
-  String get name => _name;
-
-  set name(String value) {
-    _name = value;
-    notifyListeners();
-  }
+  GlobalData({
+    required this.cutename,
+    required this.elementName,
+    required this.elementTime,
+    required this.elementCount});
 }

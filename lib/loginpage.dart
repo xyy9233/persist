@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:persist/Registration.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'ChangeNotifierProvider.dart';
 import 'mainPage/homepage.dart';
 import 'package:provider/provider.dart';
 
 ///数据持久化：
+/*
 class User {
   final String name;
   final String password;
@@ -26,6 +25,7 @@ Future<User> getUserProfile() async {
   final password = prefs.getString('password');
   return User(name: name!, password: password!);
 }
+*/
 
 ///
 
@@ -39,14 +39,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
- //final nameData = Provider.of<NameData>(context);
-  String _password = "";
+  String _name= "test";
+  String _password = "123";
   bool _isObscure = true;
-  Color _eyeColor = Colors.white;
+  Color _eyeColor = Color.fromRGBO(73, 108, 251, 1);
 
   @override
   Widget build(BuildContext context) {
-    //ScreenHelper.int(context);
+    //final data = context.watch<GlobalData>();
     return Scaffold(
       key: _formKey,
       body: ListView(
@@ -163,6 +163,18 @@ class _LoginPageState extends State<LoginPage> {
           onPressed: () {
             //Navigator.pop(context);
             print("Forget password");
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  backgroundColor: Color.fromRGBO(164, 182, 253, 1),
+                  content: Text("诶呀！只能重新注册了QAQ"),
+                );
+              },
+            );
           },
           child: const Text("Forget password?",
               style: TextStyle(
@@ -188,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
               if (v!.isEmpty) {
                 return '请输入密码';
               }
-              return null;
+              return '123';
             },
             onChanged: (value) => _password = value,
             style: TextStyle(color: Colors.white),
@@ -205,10 +217,15 @@ class _LoginPageState extends State<LoginPage> {
                     // 修改 state 内部变量, 且需要界面内容更新, 需要使用 setState()
                     setState(() {
                       _isObscure = !_isObscure;
+                      print(_isObscure);
+                      print("1111");
                       _eyeColor = (_isObscure
                           ? Color.fromRGBO(73, 108, 251, 1)
                           : Theme.of(context).iconTheme.color)!;
-                    });
+                      print(_eyeColor);
+                      print("2222");
+                    }
+                    );
                   },
                 )
             )
@@ -217,7 +234,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget buildnameTextField() {
-    final nameData = Provider.of<NameData>(context);
     return Container(
         height: 45,
         width: 321,
@@ -237,10 +253,9 @@ class _LoginPageState extends State<LoginPage> {
             if (!nameReg.hasMatch(v!)) {
               return '只能输入字母和数字';
             }
-            return null;
+            return "test";
           },
-          onSaved: (v) => nameData.name = v!,
-          onChanged: (value) => nameData.name = value
+          onChanged: (value) => _name = value,
         )
     );
   }
@@ -263,10 +278,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _submitForm() async {
-    final nameData = Provider.of<NameData>(context);
-    print(nameData.name);
+    print(_name);
     print(_password);
-    if (nameData.name.isEmpty) {
+    if (_name.isEmpty) {
       print("请输入用户名");
       return;
     }
@@ -276,12 +290,12 @@ class _LoginPageState extends State<LoginPage> {
     }
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      print(nameData.name);
+      print(_name);
       print(_password);
-      print('Sending request with name: $nameData.name and password: $_password');
+      print('Sending request with name: $_name and password: $_password');
       final response = await http.post(
         'http://8.130.41.221:8081' as Uri,
-        body: {'name': nameData.name, 'password': _password},
+        body: {'name': _name, 'password': _password},
       );
       print(response.statusCode);
       final responseJson = json.decode(response.body);
@@ -298,6 +312,20 @@ class _LoginPageState extends State<LoginPage> {
       } else {
         print("戳啦!!!");
       }
+    }
+    else{
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            backgroundColor: Color.fromRGBO(164, 182, 253, 1),
+            content: Text("诶嗯！输入非法！！！"),
+          );
+        },
+      );
     }
   }
 }

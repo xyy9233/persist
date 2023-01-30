@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'ChangeNotifierProvider.dart';
 import 'SplashPage.dart';
 import 'common/Global.dart';
+import 'loginpage.dart';
 import 'mainPage/homepage.dart';
 
 void main() {
   Global.init().then((e) =>runApp(MaterialApp(home:SplashPage(),)));
 }
 
-class MyApp extends StatelessWidget {
+/*class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -21,9 +24,29 @@ class MyApp extends StatelessWidget {
           "/": (context) => MyHomePage(token: 'token',),//LoginPage(title: "登录"),
         });
   }
+}*/
 
-
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<GlobalData>(
+          create: (context) => GlobalData(
+            cutename: '',
+            elementName: '',
+            elementTime:1,
+            elementCount: 0,
+          ),
+        ),
+      ],
+      child: MaterialApp(
+        home: LoginPage(key: ValueKey('login_page'), title: '登录',),
+      ),
+    );
+  }
 }
+
 
 /*
 class ProfileChangeNotifier extends ChangeNotifier {
