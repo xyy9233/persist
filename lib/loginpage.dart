@@ -39,7 +39,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  String _name= "test";
+  String _name = "test";
   String _password = "123";
   bool _isObscure = true;
   Color _eyeColor = Color.fromRGBO(73, 108, 251, 1);
@@ -122,8 +122,29 @@ class _LoginPageState extends State<LoginPage> {
           child: Text(
             'Log in',
           ),
-          onPressed: () {
-            _submitForm();
+          onPressed: () async {
+            String url = "http://8.130.41.221:8081";
+            var uri = Uri.parse(url);
+            var response = await http.post(
+              uri,
+              headers: {"Content-Type": "application/json"},
+              body: jsonEncode({'name': _name, 'password': _password}),
+            );
+            if (response.statusCode == 200) {
+              // successfully logged in
+              print(
+                  'Successfully logged in with name: $_name and password: $_password');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyHomePage(token: "login-page"),
+                ),
+              );
+            } else {
+              // failed to log in
+              print(
+                  'Failed to log in with name: $_name and password: $_password');
+            }
           }),
     );
   }
@@ -138,15 +159,17 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             const Text('没有账号?'),
             GestureDetector(
-              child: const Text('长按注册', style: TextStyle(color: Colors.blueAccent)),
-              onLongPress: () {
-                print("点击注册");
-                Navigator.push(
+                child: const Text(
+                    '长按注册', style: TextStyle(color: Colors.blueAccent)),
+                onLongPress: () {
+                  print("点击注册");
+                  Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => RegistrationPage(title: "注册")),
-                );
-              }
-              )
+                    MaterialPageRoute(
+                        builder: (context) => RegistrationPage(title: "注册")),
+                  );
+                }
+            )
           ],
         ),
       ),
@@ -194,7 +217,8 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         child: TextFormField(
-            obscureText: _isObscure, // 是否显示文字
+            obscureText: _isObscure,
+            // 是否显示文字
             onSaved: (v) => _password = v!,
             validator: (v) {
               if (v!.isEmpty) {
@@ -221,7 +245,10 @@ class _LoginPageState extends State<LoginPage> {
                       print("1111");
                       _eyeColor = (_isObscure
                           ? Color.fromRGBO(73, 108, 251, 1)
-                          : Theme.of(context).iconTheme.color)!;
+                          : Theme
+                          .of(context)
+                          .iconTheme
+                          .color)!;
                       print(_eyeColor);
                       print("2222");
                     }
@@ -265,18 +292,19 @@ class _LoginPageState extends State<LoginPage> {
         padding: EdgeInsets.fromLTRB(57, 340, 60, 0),
         child: Center(
             child: Text(
-          'Persist',
-          style: TextStyle(
-            color: Colors.deepPurple,
-            fontSize: 47,
-          ),
-        )));
+              'Persist',
+              style: TextStyle(
+                color: Colors.deepPurple,
+                fontSize: 47,
+              ),
+            )));
   }
 
   Widget getImage(String imageUrl) {
     return Image.asset(imageUrl);
   }
 
+/*
   _submitForm() async {
     print(_name);
     print(_password);
@@ -328,4 +356,6 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
   }
+}
+*/
 }
