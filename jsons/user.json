@@ -2,8 +2,8 @@
   "user_id": 1000001,
   "phone": "17652805389",
   "email": "1768765226@qq.com",
-  "user_name": "wind",
-  "user_pwd": "password",
+  "username": "test",
+  "password": "123",
 
   "habit_id": 10001,
   "target": "按时睡觉",
