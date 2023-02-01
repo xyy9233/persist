@@ -9,8 +9,8 @@ class User {
   late num user_id;
   late String phone;
   late String email;
-  late String user_name;
-  late String user_pwd;
+  late String username;
+  late String password;
   late num habit_id;
   late String target;
   late num consist_day;
@@ -18,7 +18,6 @@ class User {
   late String avatar;
   late String sound;
   late String statement;
-  //late String x-api-key;
   
   factory User.fromJson(Map<String,dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);

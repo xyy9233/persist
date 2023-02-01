@@ -4,6 +4,7 @@ import 'package:persist/Registration.dart';
 import 'package:http/http.dart' as http;
 import 'mainPage/homepage.dart';
 import 'package:provider/provider.dart';
+import 'package:dio/dio.dart';
 
 ///数据持久化：
 /*
@@ -39,8 +40,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  String _name = "test";
-  String _password = "123";
+  String username = "test";
+  String password = "123";
   bool _isObscure = true;
   Color _eyeColor = Color.fromRGBO(73, 108, 251, 1);
 
@@ -66,13 +67,13 @@ class _LoginPageState extends State<LoginPage> {
             alignment: Alignment.center,
             child: getImage("assets/fubiaoti.png"),
           ),
-          Container(
+          /*Container(
             width: 30,
             height: 29,
             alignment: Alignment.centerRight,
             padding: const EdgeInsets.only(top: 1, right: 10, bottom: 0),
             child: getImage("assets/huahua.png"),
-          ),
+          ),*/
           const SizedBox(height: 10),
           buildnameTextField(), // 输入账号
           const SizedBox(height: 20),
@@ -122,30 +123,8 @@ class _LoginPageState extends State<LoginPage> {
           child: Text(
             'Log in',
           ),
-          onPressed: () async {
-            String url = "http://8.130.41.221:8081";
-            var uri = Uri.parse(url);
-            var response = await http.post(
-              uri,
-              headers: {"Content-Type": "application/json"},
-              body: jsonEncode({'name': _name, 'password': _password}),
-            );
-            if (response.statusCode == 200) {
-              // successfully logged in
-              print(
-                  'Successfully logged in with name: $_name and password: $_password');
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MyHomePage(token: "login-page"),
-                ),
-              );
-            } else {
-              // failed to log in
-              print(
-                  'Failed to log in with name: $_name and password: $_password');
-            }
-          }),
+          onPressed: () =>login(),
+      ),
     );
   }
 
@@ -219,14 +198,14 @@ class _LoginPageState extends State<LoginPage> {
         child: TextFormField(
             obscureText: _isObscure,
             // 是否显示文字
-            onSaved: (v) => _password = v!,
+            onSaved: (v) => password = v!,
             validator: (v) {
               if (v!.isEmpty) {
                 return '请输入密码';
               }
               return '123';
             },
-            onChanged: (value) => _password = value,
+            onChanged: (value) => password = value,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 labelText: "password",
@@ -282,7 +261,7 @@ class _LoginPageState extends State<LoginPage> {
             }
             return "test";
           },
-          onChanged: (value) => _name = value,
+          onChanged: (value) => username = value,
         )
     );
   }
@@ -304,44 +283,60 @@ class _LoginPageState extends State<LoginPage> {
     return Image.asset(imageUrl);
   }
 
+///尝试使用dio？
+  ///报错：
+  ///I/flutter (30557): DioError [DioErrorType.connectTimeout]: Connecting timed out [0ms]
+  /// I/flutter (30557): Source stack:
+  Future<void> getHttp() async {
+    try {
+      var response = await Dio().get('http://8.130.41.221:8081/web/register.html');
+      print(response);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  ///用http
+/// ????尝试改了好多然后发现有点屎注释了重写一个
+
 /*
-  _submitForm() async {
-    print(_name);
-    print(_password);
-    if (_name.isEmpty) {
-      print("请输入用户名");
-      return;
-    }
-    if (_password.isEmpty) {
-      print("请输入密码");
-      return;
-    }
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      print(_name);
-      print(_password);
-      print('Sending request with name: $_name and password: $_password');
-      final response = await http.post(
-        'http://8.130.41.221:8081' as Uri,
-        body: {'name': _name, 'password': _password},
-      );
-      print(response.statusCode);
-      final responseJson = json.decode(response.body);
-      if (responseJson['status'] == 'success') {
-        final token = responseJson['token'];
-        print('服务器响应: ${response.statusCode}');
-        print("!!!!!!!!!!!!!!!!!!!!!!!!");
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MyHomePage(token: token),
-          ),
-        );
-      } else {
-        print("戳啦!!!");
+  var cookie;var dio;
+  Future<void> login() async {
+    dio.options.followRedirects = false;
+    dio.options.validateStatus = (status) {
+      return status! < 500;
+    };
+    print(username);print(password);
+    var headers = {
+      'User-Agent': 'http://8.130.41.221:8081/web/register.html',
+      'Content-Type': 'application/json'
+    };
+    var url = Uri.https('http://8.130.41.221:8081/web/register.html', 'whatsit/create');
+    var response = await http.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({'username': "name", 'password': "password"}),
+    );
+    // 指定超时时间
+    await dio.post("").timeout(const Duration(seconds: 3));
+    if (response.statusCode == 200) {
+      if (cookie != null) dio.options.headers["Cookie"] = cookie;
+      Response resp = await dio.get('').timeout(const Duration(seconds: 3));
+      if (resp.headers["set-cookie"] != null) {
+        cookie = resp.headers["set-cookie"].toString();
+        cookie = cookie.substring(1, cookie.length - 1);
       }
+      //print(await response.stream.bytesToString());
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MyHomePage(token: "login-page"),
+        ),
+      );
+      // Handle success
     }
-    else{
+    else {
+      print(response.reasonPhrase);
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -350,12 +345,47 @@ class _LoginPageState extends State<LoginPage> {
               borderRadius: BorderRadius.circular(10.0),
             ),
             backgroundColor: Color.fromRGBO(164, 182, 253, 1),
-            content: Text("诶嗯！输入非法！！！"),
+            content: Text("密码错误噢"),
           );
         },
       );
+      // Handle error
     }
   }
-}
 */
+
+  ///E/flutter (30557): [ERROR:flutter/runtime/dart_vm_initializer.cc(41)] Unhandled Exception: Connection timed out
+  ///E/flutter (30557): #0      IOClient.send (package:http/src/io_client.dart:88:7)
+  /// E/flutter (30557): <asynchronous suspension>
+  /// E/flutter (30557): #1      BaseClient._sendUnstreamed (package:http/src/base_client.dart:93:32)
+  /// E/flutter (30557): <asynchronous suspension>
+  /// E/flutter (30557): #2      _withClient (package:http/http.dart:164:12)
+  /// E/flutter (30557): <asynchronous suspension>
+  /// E/flutter (30557):
+  Future<void> login()async{
+    print('username=${username}, password=${password}');
+    var url =Uri.parse('http://8.130.41.221:8081/web/register.html');
+    var body = {'username': username, 'password': password};
+    http.post(url, body: body).then((response) {
+      print('服务器响应: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyHomePage(token: "login-page"),
+          ),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(content: Text("密码错误噢"),);
+          },
+        );
+      }
+    }
+    );
+  }
+
+
 }

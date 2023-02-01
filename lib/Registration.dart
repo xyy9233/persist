@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:persist/loginpage.dart';
@@ -8,22 +10,22 @@ import 'mainPage/homepage.dart';
 
 ///数据持久化：
 class User {
-  final String name;
+  final String username;
   final String password;
-  User({required this.name, required this.password});
+  User({required this.username, required this.password});
 }
 
 saveUserProfile(User user) async {
   final prefs = await SharedPreferences.getInstance();
-  prefs.setString('name', user.name);
+  prefs.setString('username', user.username);
   prefs.setString('password', user.password);
 }
 
 Future<User> getUserProfile() async {
   final prefs = await SharedPreferences.getInstance();
-  final name = prefs.getString('name');
+  final username = prefs.getString('username');
   final password = prefs.getString('password');
-  return User(name: name!, password: password!);
+  return User(username: username!, password: password!);
 }
 
 ///
@@ -38,8 +40,8 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
-  String _name = "";
-  String _password = "";
+  String username = "";
+  String password = "";
   bool _isObscure = true;
   Color _eyeColor = Colors.white;
 
@@ -70,14 +72,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
     var dio = Dio();
     var response = await dio.post(
         "http://8.130.41.221:8081/web/register.html",
-        data: {"name": _name,
-          "password": _password}
+        data: {"username": username,
+          "password": password}
     );
-    if (_name.isEmpty) {
+    if (username.isEmpty) {
       print("请输入用户名");
       return;
     }
-    if (_password.isEmpty) {
+    if (password.isEmpty) {
       print("请输入密码");
       return;
     }
@@ -197,7 +199,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             'Registration',
           ),
           onPressed: () {
-            _submitForm();
+            registerUser();
           }),
     );
   }
@@ -231,7 +233,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
         child: TextFormField(
             obscureText: _isObscure, // 是否显示文字
-            onSaved: (v) => _password = v!,
+            onSaved: (v) => password = v!,
             validator: (v) {
               if (v!.isEmpty) {
                 return '请输入密码';
@@ -280,7 +282,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               return '只能输入字母和数字';
             }
           },
-          onSaved: (v) => _name = v!,
+          onSaved: (v) => username = v!,
         ));
   }
 
@@ -300,4 +302,39 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget getImage(String imageUrl) {
     return Image.asset(imageUrl);
   }
+///E/flutter ( 5058): [ERROR:flutter/runtime/dart_vm_initializer.cc(41)] Unhandled Exception: NoSuchMethodError: The method 'post' was called on null.
+/// E/flutter ( 5058): Receiver: null
+/// E/flutter ( 5058): Tried calling: post("http://8.130.41.221:8081/web/register.html", body: "{\"username\":\"\",\"password\":\"\"}", headers: _Map len:1)
+  /// 改了后时间超时（orz
+  Future<void> registerUser() async {
+    var url =Uri.parse('http://8.130.41.221:8081/web/register.html');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'username': "test2",
+        'password':"123",
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Successful registration');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MyHomePage(token: "login-page"),
+        ),
+      );
+    } else {
+      print('Failed to register user');
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(content: Text("注册失败，要不再试试？"),);
+        },
+      );
+    }
+  }
 }
+
+
