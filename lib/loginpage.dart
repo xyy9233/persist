@@ -95,16 +95,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  /*
-  void initState() {
-    // 自动填充上次登录的用户名，填充后将焦点定位到密码输入框
-    _unameController.text = Global.profile.lastLogin ?? "";
-    if (_unameController.text.isNotEmpty) {
-      _nameAutoFocus = false;
-    }
-    super.initState();
-  }
-*/
+
   Widget buildLoginButton(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(25, 5, 25, 20),
@@ -283,91 +274,11 @@ class _LoginPageState extends State<LoginPage> {
     return Image.asset(imageUrl);
   }
 
-///尝试使用dio？
-  ///报错：
-  ///I/flutter (30557): DioError [DioErrorType.connectTimeout]: Connecting timed out [0ms]
-  /// I/flutter (30557): Source stack:
-  Future<void> getHttp() async {
-    try {
-      var response = await Dio().get('http://8.130.41.221:8081/web/register.html');
-      print(response);
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  ///用http
-/// ????尝试改了好多然后发现有点屎注释了重写一个
-
-/*
-  var cookie;var dio;
-  Future<void> login() async {
-    dio.options.followRedirects = false;
-    dio.options.validateStatus = (status) {
-      return status! < 500;
-    };
-    print(username);print(password);
-    var headers = {
-      'User-Agent': 'http://8.130.41.221:8081/web/register.html',
-      'Content-Type': 'application/json'
-    };
-    var url = Uri.https('http://8.130.41.221:8081/web/register.html', 'whatsit/create');
-    var response = await http.post(
-      url,
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({'username': "name", 'password': "password"}),
-    );
-    // 指定超时时间
-    await dio.post("").timeout(const Duration(seconds: 3));
-    if (response.statusCode == 200) {
-      if (cookie != null) dio.options.headers["Cookie"] = cookie;
-      Response resp = await dio.get('').timeout(const Duration(seconds: 3));
-      if (resp.headers["set-cookie"] != null) {
-        cookie = resp.headers["set-cookie"].toString();
-        cookie = cookie.substring(1, cookie.length - 1);
-      }
-      //print(await response.stream.bytesToString());
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MyHomePage(token: "login-page"),
-        ),
-      );
-      // Handle success
-    }
-    else {
-      print(response.reasonPhrase);
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            backgroundColor: Color.fromRGBO(164, 182, 253, 1),
-            content: Text("密码错误噢"),
-          );
-        },
-      );
-      // Handle error
-    }
-  }
-*/
-
-  ///E/flutter (30557): [ERROR:flutter/runtime/dart_vm_initializer.cc(41)] Unhandled Exception: Connection timed out
-  ///E/flutter (30557): #0      IOClient.send (package:http/src/io_client.dart:88:7)
-  /// E/flutter (30557): <asynchronous suspension>
-  /// E/flutter (30557): #1      BaseClient._sendUnstreamed (package:http/src/base_client.dart:93:32)
-  /// E/flutter (30557): <asynchronous suspension>
-  /// E/flutter (30557): #2      _withClient (package:http/http.dart:164:12)
-  /// E/flutter (30557): <asynchronous suspension>
-  /// E/flutter (30557):
   Future<void> login()async{
-    print('username=${username}, password=${password}');
-    var url =Uri.parse('http://8.130.41.221:8081/web/register.html');
     var body = {'username': username, 'password': password};
-    http.post(url, body: body).then((response) {
-      print('服务器响应: ${response.statusCode}');
+    var request = http.Request('GET', Uri.parse('http://8.130.41.221:8081/users/login'));
+    request.headers.addAll(body);
+    http.StreamedResponse response = await request.send();
       if (response.statusCode == 200) {
         Navigator.push(
           context,
@@ -375,7 +286,8 @@ class _LoginPageState extends State<LoginPage> {
             builder: (context) => MyHomePage(token: "login-page"),
           ),
         );
-      } else {
+      }
+      else {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -383,8 +295,6 @@ class _LoginPageState extends State<LoginPage> {
           },
         );
       }
-    }
-    );
   }
 
 

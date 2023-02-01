@@ -11,20 +11,12 @@ class Page1 extends StatefulWidget {
 }
 
 class _Page1State extends State<Page1> {
-  //final GlobalKey _fromKey = GlobalKey<FormState>();
-  //late String _day;
-  //bool _isObscure = true;
-  //Color _eyeColor = Colors.grey;
-
   get items => 1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        /*child: Form(
-              //key: _day, // 设置globalKey，用于后面获取FormStat
-              autovalidateMode: AutovalidateMode.onUserInteraction,*/
           padding: const EdgeInsets.symmetric(horizontal: 20),
           children: [
             const SizedBox(height: 10),
@@ -108,7 +100,7 @@ class _Page1State extends State<Page1> {
           Text(
             DateFormat.yMMMd().format(DateTime.now()),
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 20,
               color: Colors.indigoAccent,
               fontWeight: FontWeight.bold,
             ),
@@ -121,8 +113,8 @@ class _Page1State extends State<Page1> {
                 // 从右往左是当前日到七天前
                 var date = DateTime.now().subtract(Duration(days: index));
                 return Container(
-                    width: 60,
-                    height: 60,
+                    width: 30,
+                    height: 30,
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.black, width: 1)),
                     margin: EdgeInsets.all(5),

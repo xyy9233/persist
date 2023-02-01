@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        home: LoginPage(key: ValueKey('login_page'), title: '登录',),
+        home: MyHomePage(token: 'login-page')//LoginPage(key: ValueKey('login_page'), title: '登录',),
       ),
     );
   }

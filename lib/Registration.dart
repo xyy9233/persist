@@ -165,12 +165,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
           children: [
             const Text('已有账号?'),
             GestureDetector(
-              child: const Text('长按登录', style: TextStyle(color: Colors.blueAccent)),
+              child: const Text(
+                  '长按登录', style: TextStyle(color: Colors.blueAccent)),
               onLongPress: () {
                 print("登录");
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage(title: "登录", key: UniqueKey(),))
+                    MaterialPageRoute(builder: (context) =>
+                        LoginPage(title: "登录", key: UniqueKey(),))
                 );
               },
             )
@@ -232,7 +234,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         child: TextFormField(
-            obscureText: _isObscure, // 是否显示文字
+            obscureText: _isObscure,
+            // 是否显示文字
             onSaved: (v) => password = v!,
             validator: (v) {
               if (v!.isEmpty) {
@@ -255,7 +258,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       _isObscure = !_isObscure;
                       _eyeColor = (_isObscure
                           ? Color.fromRGBO(73, 108, 251, 1)
-                          : Theme.of(context).iconTheme.color)!;
+                          : Theme
+                          .of(context)
+                          .iconTheme
+                          .color)!;
                     });
                   },
                 ))));
@@ -302,39 +308,32 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget getImage(String imageUrl) {
     return Image.asset(imageUrl);
   }
-///E/flutter ( 5058): [ERROR:flutter/runtime/dart_vm_initializer.cc(41)] Unhandled Exception: NoSuchMethodError: The method 'post' was called on null.
-/// E/flutter ( 5058): Receiver: null
-/// E/flutter ( 5058): Tried calling: post("http://8.130.41.221:8081/web/register.html", body: "{\"username\":\"\",\"password\":\"\"}", headers: _Map len:1)
-  /// 改了后时间超时（orz
+
   Future<void> registerUser() async {
-    var url =Uri.parse('http://8.130.41.221:8081/web/register.html');
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'username': "test2",
-        'password':"123",
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      print('Successful registration');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MyHomePage(token: "login-page"),
-        ),
-      );
-    } else {
-      print('Failed to register user');
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(content: Text("注册失败，要不再试试？"),);
-        },
-      );
+    var url = Uri.parse('http://8.130.41.221:8080/users/reg');
+    var body = {'username': username, 'password': password};
+    http.get(url, headers: body).then((response) {
+      print('服务器响应: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        print('Successful registration');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyHomePage(token: "login-page"),
+          ),
+        );
+      }
+      else {
+        print('Failed to register user');
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(content: Text("注册失败，要不再试试？"),);
+          },
+        );
+      }
     }
+    );
   }
+
 }
-
-
