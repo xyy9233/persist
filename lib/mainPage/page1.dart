@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Page1 extends StatefulWidget {
   const Page1({Key? key}) : super(key: key);
@@ -15,31 +16,42 @@ class _Page1State extends State<Page1> {
 
   @override
   Widget build(BuildContext context) {
+    getImage("assets/page1.png");
     return Scaffold(
-      body: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          children: [
-            const SizedBox(height: 10),
-            buildHello(),
-            Divider(
+
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/page1.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              children: [
+                const SizedBox(height: 30),
+                buildHello(),
+                /*Divider(
               color: Colors.black12,
               height: 20,
               thickness: 1,
-            ),
-            buildDate(),
-            Divider(
+            ),*/
+                const SizedBox(height: 30),
+                buildDate(),
+                /*Divider(
               color: Colors.black12,
               height: 20,
               thickness: 1,
-            ),
-            buildDailyPlan(),
-            Divider(
-              color: Colors.black12,
-              height: 20,
-              thickness: 1,
-            ),
-          ]),
-    );
+            ),*/
+                const SizedBox(height: 50),
+                buildDailyPlan(),
+                /*Divider(
+                  color: Colors.black12,
+                  height: 20,
+                  thickness: 1,
+                ),*/
+              ]),
+        ));
   }
 
   Widget buildHello() {
@@ -77,11 +89,12 @@ class _Page1State extends State<Page1> {
                 height: 80.0,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: NetworkImage(
-                        'https://img.duotegame.com/article/contents/2022/10/17/2022101795825615.png'),
-                    fit: BoxFit.cover,
+                  /*image: DecorationImage(
+                image: NetworkImage(
+                    //'https://img.duotegame.com/article/contents/2022/10/17/2022101795825615.png'
                   ),
+                fit: BoxFit.cover,
+              ),*/
                 ),
               ),
             ),
@@ -140,19 +153,19 @@ class _Page1State extends State<Page1> {
   Widget buildDailyPlan() {
     return Container(
         width: 300,
-        height: 400,
+        height: 700,
         child: Container(
           child: ListView.builder(
-            itemCount: 20,
+            itemCount: 18,
             itemBuilder: (BuildContext context, int index) {
               return Container(
-                height: 150,
+                height: 180,
                 child: Row(
                   children: <Widget>[
                     index % 2 == 0
                         ? Expanded(
                       child: Text(
-                        "偶数行",
+                        "偶数行----------",
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -164,7 +177,7 @@ class _Page1State extends State<Page1> {
                     index % 2 == 1
                         ? Expanded(
                       child: Text(
-                        "奇数行",
+                        "------------奇数行",
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -177,6 +190,7 @@ class _Page1State extends State<Page1> {
         ));
   }
 }
+
 //手势检测
 /*class _GestureTestState extends State<GestureTest> {
   String _operation = "No Gesture detected!"; //保存事件名
@@ -208,3 +222,6 @@ class _Page1State extends State<Page1> {
     });
   }
 }*/
+Widget getImage(String imageUrl) {
+  return Image.asset(imageUrl);
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'ChangeNotifierProvider.dart';
 import 'SplashPage.dart';
@@ -7,7 +8,8 @@ import 'loginpage.dart';
 import 'mainPage/homepage.dart';
 
 void main() {
-  Global.init().then((e) =>runApp(MaterialApp(home:SplashPage(),)));
+
+  Global.init().then((e) =>runApp(MyApp()));
 }
 
 /*class MyApp extends StatelessWidget {
@@ -29,24 +31,32 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<GlobalData>(
-          create: (context) => GlobalData(
-            cutename: '',
-            elementName: '',
-            elementTime:1,
-            elementCount: 0,
-          ),
-        ),
-      ],
-      child: MaterialApp(
-        home: MyHomePage(token: 'login-page')//LoginPage(key: ValueKey('login_page'), title: '登录',),
-      ),
+    return ScreenUtilInit(
+        designSize: const Size(393, 852),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider<GlobalData>(
+                create: (context) =>
+                    GlobalData(
+                      cutename: '',
+                      elementName: '',
+                      elementTime: 1,
+                      elementCount: 0,
+                    ),
+              ),
+            ],
+            child: MaterialApp(
+                home: MyHomePage(token: 'login-page',)
+              //LoginPage(key: ValueKey('login_page'), title: '登录',),
+            ),
+          );
+        }
     );
   }
 }
-
 
 /*
 class ProfileChangeNotifier extends ChangeNotifier {

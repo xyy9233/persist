@@ -2,39 +2,36 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:persist/Registration.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'mainPage/homepage.dart';
 import 'package:provider/provider.dart';
-import 'package:dio/dio.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-///数据持久化：
-/*
 class User {
-  final String name;
+  final String username;
   final String password;
-  User({required this.name, required this.password});
+  User({required this.username, required this.password});
 }
 
 saveUserProfile(User user) async {
   final prefs = await SharedPreferences.getInstance();
-  prefs.setString('name', user.name);
+  prefs.setString('username', user.username);
   prefs.setString('password', user.password);
 }
 
 Future<User> getUserProfile() async {
   final prefs = await SharedPreferences.getInstance();
-  final name = prefs.getString('name');
+  final username = prefs.getString('username');
   final password = prefs.getString('password');
-  return User(name: name!, password: password!);
+  return User(username: username!, password: password!);
 }
-*/
-
-///
 
 class LoginPage extends StatefulWidget {
   LoginPage({required Key key, required this.title}) : super(key: key);
   final String title;
 
   @override
+
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -56,24 +53,24 @@ class _LoginPageState extends State<LoginPage> {
           getImage("assets/loginback.png"),
           const SizedBox(height: 10),
           Container(
-            width: 250,
-            height: 80,
+            width: 250.w,
+            height: 80.h,
             alignment: Alignment.center,
             child: getImage("assets/biaoti.png"),
           ),
           Container(
-            width: 30,
-            height: 15,
+            width: 30.w,
+            height: 15.h,
             alignment: Alignment.center,
             child: getImage("assets/fubiaoti.png"),
           ),
-          /*Container(
-            width: 30,
-            height: 29,
+          Container(
+            width: 30.w,
+            height: 29.h,
             alignment: Alignment.centerRight,
             padding: const EdgeInsets.only(top: 1, right: 10, bottom: 0),
             child: getImage("assets/huahua.png"),
-          ),*/
+          ),
           const SizedBox(height: 10),
           buildnameTextField(), // 输入账号
           const SizedBox(height: 20),
@@ -81,8 +78,8 @@ class _LoginPageState extends State<LoginPage> {
           buildForgetpasswordText(context), // 忘记密码
           //const SizedBox(height: 20),
           Container(
-            width: 88,
-            height: 77,
+            width: 88.w,
+            height: 77.h,
             alignment: Alignment.centerLeft,
             child: getImage("assets/dahua.png"),
           ),
@@ -99,8 +96,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget buildLoginButton(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(25, 5, 25, 20),
-      width: 321,
-      height: 42,
+      width: 321.w,
+      height: 42.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -179,8 +176,8 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget buildpasswordTextField(BuildContext context) {
     return Container(
-        height: 45,
-        width: 321,
+        height: 45.h,
+        width: 321.w,
         margin: EdgeInsets.only(left: 33, top: 0, right: 33),
         decoration: BoxDecoration(
           color: Color.fromRGBO(164, 182, 253, 1),
@@ -232,14 +229,14 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget buildnameTextField() {
     return Container(
-        height: 45,
-        width: 321,
-        margin: EdgeInsets.only(left: 33, top: 0, right: 33),
+        height: 45.h,
+        width: 321.w,
+        margin: EdgeInsets.only(left: 33.w, top: 0.h, right: 33.w),
         decoration: BoxDecoration(
           color: Color.fromRGBO(164, 182, 253, 1),
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        child: TextFormField(
+        child:TextFormField(
           style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
             labelText: 'Username',
