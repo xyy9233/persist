@@ -214,7 +214,6 @@ class _Page1State extends State<Page1> {
       ),
     );
   }
-
   void updateText(String text) {
     //更新显示的事件名
     setState(() {

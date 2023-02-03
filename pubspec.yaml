@@ -85,6 +85,15 @@ flutter:
     - assets/page3.png
     - assets/rememberno.png
     - assets/rememberok.png
+    - assets/1no.png
+    -  assets/1yes.png
+    -  assets/2no.png
+    -  assets/2yes.png
+    -  assets/3no.png
+    -  assets/4no.png
+    -  assets/pingpang.png
+    -  assets/jutie.png
+    -  assets/zidingyi.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

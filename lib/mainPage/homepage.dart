@@ -29,6 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomAppBar(
         elevation: 10.0,
         shape: CircularNotchedRectangle(),
+        color: Color.fromRGBO(73, 108, 251, 1),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,

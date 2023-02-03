@@ -18,4 +18,3 @@ class Page2 extends StatelessWidget {
     );
   }
 }
-
