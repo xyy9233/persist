@@ -3,8 +3,18 @@ import 'package:flutter/material.dart';
 class Page4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/page2.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+
+        ),
+      ),
     );
   }
 }

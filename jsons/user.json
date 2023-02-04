@@ -1,10 +1,18 @@
 {
-  "user_id": 1000001,
-  "phone": "17652805389",
-  "email": "1768765226@qq.com",
   "username": "test",
   "password": "123",
 
+  "user_id": 1000001,
+  "state": 200,
+  "message": "in",
+  "data": null,
+
+  "hid": 0,
+  "uid": 0,
+  "name": "习惯1",
+  "encourage_sentence": "坚持就是胜利",
+  "start_date": "string",
+  "code": 1,
   "habit_id": 10001,
   "target": "按时睡觉",
   "consist_day": 21,

@@ -31,7 +31,6 @@ class LoginPage extends StatefulWidget {
   final String title;
 
   @override
-
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -44,145 +43,195 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    //final data = context.watch<GlobalData>();
     return Scaffold(
-      key: _formKey,
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 0),
+        backgroundColor: Colors.white,
+        body: Stack(
+          key: _formKey,
+          children: [
+            Positioned(
+              left: 0.0.w,
+              top: 0.0.h,
+              child: Container(
+                width: 393.w,
+                height: 390.h,
+                child: getImage("assets/loginback.png"),
+              ),
+            ),
+            Positioned(
+              left: 57.0.w,
+              top: 353.0.h,
+              child: Container(
+                width: 276.w,
+                height: 80.h,
+                alignment: Alignment.center,
+                child: getImage("assets/biaoti.png"),
+              ),
+            ),
+            Positioned(
+              left: 36.0.w,
+              top: 432.0.h,
+              child: Container(
+                width: 357.w,
+                height: 179.h,
+                child: getImage("assets/zhanghaomimakuang.png"),
+              ),
+            ),
+
+            ///LoginButton
+            Positioned(
+              left: 36.0.w,
+              top: 739.0.h,
+              child: Container(
+                width: 321.w,
+                height: 48.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                child: buildLoginButton(context),
+              ),
+            ),
+
+            ///Forgetpassword
+            Positioned(
+              left: 270.0.w,
+              top: 616.0.h,
+              child: Container(
+                width: 120.w,
+                height: 40.h,
+                child: buildForgetpasswordText(context),
+              ),
+            ),
+
+            ///Register
+            Positioned(
+              left: 122.0.w,
+              top: 791.0.h,
+              child: Container(
+                child: buildRegisterText(context),
+              ),
+            ),
+
+            ///账号
+            Positioned(
+              left: 36.0.w,
+              top: 492.0.h,
+              child: Container(
+                width: 321.w,
+                height: 48.h,
+                child: buildnameTextField(),
+              ),
+            ),
+
+            ///密码
+            Positioned(
+              left: 60.0.w,
+              top: 560.0.h,
+              child: Container(
+                width: 300.w,
+                height: 48.h,
+                child: buildpasswordTextField(context),
+              ),
+            ),
+
+            ///remember me
+            Positioned(
+              left: 42.0.w,
+              top: 627.0.h,
+              child: Text("Remember  me",
+                  style: TextStyle(
+                    color: Color.fromRGBO(135, 135, 135, 1),
+                    //fontWeight: FontWeight.bold,
+                  )),
+            ),
+            Positioned(
+              left: 6.0.w,
+              top: 620.0.h,
+              child: Container(
+                width: 36.w,
+                height: 36.h,
+                child: getImage("assets/rememberok.png"),
+              ),
+            ),
+          ],
+        ));
+  }
+
+  Widget buildLoginButton(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(73, 108, 251, 1),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Center(
+          child: Text(
+            'Log in',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+      onTap: () {
+        login();
+      },
+    );
+  }
+
+  Widget buildRegisterText(context) {
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          getImage("assets/loginback.png"),
-          const SizedBox(height: 10),
-          Container(
-            width: 250.w,
-            height: 80.h,
-            alignment: Alignment.center,
-            child: getImage("assets/biaoti.png"),
-          ),
-          Container(
-            width: 30.w,
-            height: 15.h,
-            alignment: Alignment.center,
-            child: getImage("assets/fubiaoti.png"),
-          ),
-          Container(
-            width: 30.w,
-            height: 29.h,
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.only(top: 1, right: 10, bottom: 0),
-            child: getImage("assets/huahua.png"),
-          ),
-          const SizedBox(height: 10),
-          buildnameTextField(), // 输入账号
-          const SizedBox(height: 20),
-          buildpasswordTextField(context), // 输入密码
-          buildForgetpasswordText(context), // 忘记密码
-          //const SizedBox(height: 20),
-          Container(
-            width: 88.w,
-            height: 77.h,
-            alignment: Alignment.centerLeft,
-            child: getImage("assets/dahua.png"),
-          ),
-          //const SizedBox(height: 40),
-          //buildRegisterText(context), // 注册
-          buildRegisterText(context),
-          buildLoginButton(context), // 登录按钮
+          Text('Have not an account yet?',
+              style: TextStyle(
+                  color: Color.fromRGBO(109, 109, 109, 1), fontSize: 8.sp)),
+          GestureDetector(
+              child: Text('Registration',
+                  style: TextStyle(
+                      color: Color.fromRGBO(35, 36, 79, 1), fontSize: 8.sp)),
+              onLongPress: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RegistretionPage(
+                        key: ValueKey('login_page'),
+                        title: '注册',
+                      ),
+                    ));
+              })
         ],
       ),
     );
   }
 
-
-  Widget buildLoginButton(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(25, 5, 25, 20),
-      width: 321.w,
-      height: 42.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      //padding: EdgeInsets.fromLTRB(36, 0, 36, 42),
-      child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor:
-            MaterialStateProperty.all(Color.fromRGBO(73, 108, 251, 1)),
-            textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16)),
-          ),
-          child: Text(
-            'Log in',
-          ),
-          onPressed: () =>login(),
-      ),
-    );
-  }
-
-
-  Widget buildRegisterText(context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(11, 0, 11, 0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('没有账号?'),
-            GestureDetector(
-                child: const Text(
-                    '长按注册', style: TextStyle(color: Colors.blueAccent)),
-                onLongPress: () {
-                  print("点击注册");
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RegistrationPage(title: "注册")),
-                  );
-                }
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-
   Widget buildForgetpasswordText(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 1, right: 30, bottom: 0),
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: TextButton(
-          onPressed: () {
-            //Navigator.pop(context);
-            print("Forget password");
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  backgroundColor: Color.fromRGBO(164, 182, 253, 1),
-                  content: Text("诶呀！只能重新注册了QAQ"),
-                );
-              },
-            );
-          },
-          child: const Text("Forget password?",
-              style: TextStyle(
-                  fontSize: 14, color: Color.fromRGBO(207, 207, 207, 1))),
-        ),
+    return Container(
+      child: TextButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                backgroundColor: Color.fromRGBO(164, 182, 253, 1),
+                content: Text("诶呀！只能重新注册了QAQ"),
+              );
+            },
+          );
+        },
+        child: Text("Forget password?",
+            style: TextStyle(
+                fontSize: 12.sp, color: Color.fromRGBO(135, 135, 135, 1))),
       ),
     );
   }
 
   Widget buildpasswordTextField(BuildContext context) {
     return Container(
-        height: 45.h,
-        width: 321.w,
-        margin: EdgeInsets.only(left: 33, top: 0, right: 33),
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(164, 182, 253, 1),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
         child: TextFormField(
             obscureText: _isObscure,
             // 是否显示文字
@@ -196,9 +245,9 @@ class _LoginPageState extends State<LoginPage> {
             onChanged: (value) => password = value,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
-                labelText: "password",
-                contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 10),
-                //border: OutlineInputBorder(borderRadius: BorderRadius.circular(32)),
+                hintText: 'Password',
+                hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
+                border: InputBorder.none,
                 suffixIcon: IconButton(
                   icon: Icon(
                     Icons.remove_red_eye,
@@ -212,35 +261,28 @@ class _LoginPageState extends State<LoginPage> {
                       print("1111");
                       _eyeColor = (_isObscure
                           ? Color.fromRGBO(73, 108, 251, 1)
-                          : Theme
-                          .of(context)
-                          .iconTheme
-                          .color)!;
+                          : Theme.of(context).iconTheme.color)!;
                       print(_eyeColor);
                       print("2222");
-                    }
-                    );
+                    });
                   },
-                )
-            )
-        )
-    );
+                ))));
   }
 
   Widget buildnameTextField() {
     return Container(
         height: 45.h,
         width: 321.w,
-        margin: EdgeInsets.only(left: 33.w, top: 0.h, right: 33.w),
+        margin: EdgeInsets.only(left: 25.w, top: 0.h, right: 33.w),
         decoration: BoxDecoration(
-          color: Color.fromRGBO(164, 182, 253, 1),
+          color: Colors.transparent,
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        child:TextFormField(
-          style: TextStyle(color: Colors.white),
+        child: TextFormField(
           decoration: InputDecoration(
-            labelText: 'Username',
-            contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+            hintText: 'Username',
+            hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
+            border: InputBorder.none,
           ),
           validator: (v) {
             var nameReg = RegExp(r"^[a-zA-Z0-9]+$");
@@ -250,49 +292,36 @@ class _LoginPageState extends State<LoginPage> {
             return "test";
           },
           onChanged: (value) => username = value,
-        )
-    );
-  }
-
-  Widget buildTitle() {
-    return const Padding(
-        padding: EdgeInsets.fromLTRB(57, 340, 60, 0),
-        child: Center(
-            child: Text(
-              'Persist',
-              style: TextStyle(
-                color: Colors.deepPurple,
-                fontSize: 47,
-              ),
-            )));
+          style: TextStyle(color: Colors.white),
+        ));
   }
 
   Widget getImage(String imageUrl) {
     return Image.asset(imageUrl);
   }
 
-  Future<void> login()async{
+  Future<void> login() async {
     var body = {'username': username, 'password': password};
-    var request = http.Request('GET', Uri.parse('http://8.130.41.221:8081/users/login'));
+    var request =
+        http.Request('GET', Uri.parse('http://8.130.41.221:8081/users/login'));
     request.headers.addAll(body);
     http.StreamedResponse response = await request.send();
-      if (response.statusCode == 200) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MyHomePage(token: "login-page"),
-          ),
-        );
-      }
-      else {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(content: Text("密码错误噢"),);
-          },
-        );
-      }
+    if (response.statusCode == 200) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MyHomePage(token: "login-page"),
+        ),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text("密码错误噢"),
+          );
+        },
+      );
+    }
   }
-
-
 }

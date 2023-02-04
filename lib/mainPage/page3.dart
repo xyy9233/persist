@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Page3 extends StatelessWidget {
   @override
@@ -11,10 +12,19 @@ class Page3 extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: Center(
-
-        ),
+        child: ListView(children: [
+          const SizedBox(height: 80),
+          Container(
+            width: 154,
+            height: 200,
+            child: getImage("assets/jutiechengjiutianshu.png"),
+          ),
+        ]),
       ),
     );
   }
+}
+
+Widget getImage(String imageUrl) {
+  return Image.asset(imageUrl);
 }

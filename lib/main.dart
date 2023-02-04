@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(393, 852),
+
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
@@ -49,12 +50,13 @@ class MyApp extends StatelessWidget {
               ),
             ],
             child: MaterialApp(
-                home: MyHomePage(token: 'login-page',)
-              //LoginPage(key: ValueKey('login_page'), title: '登录',),
+                home: //MyHomePage(token: 'login-page',)
+              LoginPage(key: ValueKey('login_page'), title: '登录',),
             ),
           );
         }
     );
+
   }
 }
 

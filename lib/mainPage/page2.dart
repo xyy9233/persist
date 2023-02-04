@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Page2 extends StatelessWidget {
   @override
@@ -11,10 +12,34 @@ class Page2 extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: Center(
+        child: ListView(
+            children: [
 
+              Container(
+                width: 393.w,
+                height: 300.h,
+                alignment: Alignment.center,
+                child: getImage("assets/jutie.png"),
+              ),
+              Container(
+                width: 393.w,
+                height: 300.h,
+                alignment: Alignment.center,
+                child: getImage("assets/zidingyi.png"),
+              ),
+              Container(
+                width: 393.w,
+                height: 300.h,
+                alignment: Alignment.center,
+                child: getImage("assets/pingpang.png"),
+              ),
+            ]
         ),
       ),
     );
   }
+}
+
+Widget getImage(String imageUrl) {
+  return Image.asset(imageUrl);
 }

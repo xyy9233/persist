@@ -18,7 +18,6 @@ class _Page1State extends State<Page1> {
   Widget build(BuildContext context) {
     getImage("assets/page1.png");
     return Scaffold(
-
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -29,21 +28,22 @@ class _Page1State extends State<Page1> {
           child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               children: [
-                const SizedBox(height: 30),
+                const SizedBox(height: 0),
                 buildHello(),
                 /*Divider(
               color: Colors.black12,
               height: 20,
               thickness: 1,
             ),*/
-                const SizedBox(height: 30),
+                const SizedBox(height: 15),
                 buildDate(),
                 /*Divider(
               color: Colors.black12,
               height: 20,
               thickness: 1,
             ),*/
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
+                buildAdd(),
                 buildDailyPlan(),
                 /*Divider(
                   color: Colors.black12,
@@ -59,24 +59,24 @@ class _Page1State extends State<Page1> {
         child: Row(
           children: <Widget>[
             Expanded(
-              flex: 3,
+              flex: 7,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Hello!\$_name',
+                    'Hi,XX',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
-                      color: Colors.indigo,
+                      fontSize: 64.0,
+                      color: Color.fromRGBO(73, 108, 251, 1),
                     ),
                   ),
                   Text(
-                    'www加油喵',
+                    'Where there is a will, there is a way.喵',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 30.0,
-                      color: Colors.grey,
+                      fontSize: 16.0,
+                      color: Color.fromRGBO(118, 118, 118, 1) ,
                     ),
                   ),
                 ],
@@ -104,17 +104,17 @@ class _Page1State extends State<Page1> {
 
   Widget buildDate() {
     return Container(
-      width: 100,
-      height: 100,
+      width: 393.w,
+      height: 96.h,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           // 当前日期
           Text(
             DateFormat.yMMMd().format(DateTime.now()),
             style: TextStyle(
-              fontSize: 20,
-              color: Colors.indigoAccent,
+              fontSize: 24,
+              color: Color.fromRGBO(134, 159, 249, 1),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -126,16 +126,16 @@ class _Page1State extends State<Page1> {
                 // 从右往左是当前日到七天前
                 var date = DateTime.now().subtract(Duration(days: index));
                 return Container(
-                    width: 30,
-                    height: 30,
+                    width: 54.w,
+                    height: 96.h,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 1)),
-                    margin: EdgeInsets.all(5),
+                        border: Border.all(color: Color.fromRGBO(134, 159, 249, 1), width: 1)),
+                    //margin: EdgeInsets.all(5),
                     child: TextButton(
                       child: Text(DateFormat.d().format(date),
                           style: TextStyle(
-                            color: Color.fromRGBO(100, 100, 100, 1),
-                            fontSize: 30.0,
+                            color: Color.fromRGBO(225, 225, 225, 1),
+                            fontSize: 32.0,
                           )),
                       onPressed: () {
                         print(
@@ -152,7 +152,7 @@ class _Page1State extends State<Page1> {
 
   Widget buildDailyPlan() {
     return Container(
-        width: 300,
+        width: 393,
         height: 700,
         child: Container(
           child: ListView.builder(
@@ -165,19 +165,34 @@ class _Page1State extends State<Page1> {
                     index % 2 == 0
                         ? Expanded(
                       child: Text(
-                        "偶数行----------",
+                        "09:00----------",
+                        
                         textAlign: TextAlign.center,
                       ),
                     )
                         : SizedBox(),
                     CircleAvatar(
-                      backgroundColor: Colors.blue,
                       radius: 100,
+                      backgroundColor: Colors.transparent,
+                       child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/jutierenwu.png"),
+                            fit: BoxFit.cover,
+                          ),
+                          border: Border.all(
+                            color: Color.fromRGBO(73, 108, 251, 1),
+                            width: 5.0,
+                          ),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+
                     ),
                     index % 2 == 1
                         ? Expanded(
                       child: Text(
-                        "------------奇数行",
+                        "------------16:30",
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -188,6 +203,56 @@ class _Page1State extends State<Page1> {
             },
           ),
         ));
+  }
+
+  bool isVisible = false;
+  Widget buildAdd() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, right: 0, bottom: 0),
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: TextButton(
+          onPressed: () {
+            setState(() {
+              isVisible = true;
+            });
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                    child: Container(
+                      height: 546,
+                      width: 393,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("assets/addpage.png"),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(""),
+                          const SizedBox(height: 400),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                isVisible = false;
+                              });
+                            },
+                            child: Text("ADDDD!"),
+                          ),
+                        ],
+                      ),
+                    ));
+              },
+            );
+          },
+          child: const Text("ADDD?",
+              style: TextStyle(
+                  fontSize: 14, color: Color.fromRGBO(207, 207, 207, 0))),
+        ),
+      ),
+    );
   }
 }
 
