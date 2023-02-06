@@ -16,7 +16,6 @@ class _Page1State extends State<Page1> {
 
   @override
   Widget build(BuildContext context) {
-    getImage("assets/page1.png");
     return Scaffold(
         body: Container(
           decoration: BoxDecoration(
@@ -25,123 +24,214 @@ class _Page1State extends State<Page1> {
               fit: BoxFit.cover,
             ),
           ),
-          child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              children: [
-                const SizedBox(height: 0),
-                buildHello(),
-                /*Divider(
-              color: Colors.black12,
-              height: 20,
-              thickness: 1,
-            ),*/
-                const SizedBox(height: 15),
-                buildDate(),
-                /*Divider(
-              color: Colors.black12,
-              height: 20,
-              thickness: 1,
-            ),*/
-                const SizedBox(height: 30),
-                buildAdd(),
-                buildDailyPlan(),
-                /*Divider(
-                  color: Colors.black12,
-                  height: 20,
-                  thickness: 1,
-                ),*/
-              ]),
-        ));
-  }
 
-  Widget buildHello() {
-    return Container(
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 7,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Hi,XX',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 64.0,
-                      color: Color.fromRGBO(73, 108, 251, 1),
-                    ),
+              child: Stack(
+                  children: [
+                Positioned(
+                  left: 12.0.w,
+                  top: 25.0.h,
+                  child: Container(
+                    width: 393.w,
+                    height: 88.h,
+                    child: buildHiname(),
                   ),
-                  Text(
-                    'Where there is a will, there is a way.喵',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                      color: Color.fromRGBO(118, 118, 118, 1) ,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Flexible(
-              fit: FlexFit.tight,
-              child: Container(
-                width: 10.0,
-                height: 80.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  /*image: DecorationImage(
-                image: NetworkImage(
-                    //'https://img.duotegame.com/article/contents/2022/10/17/2022101795825615.png'
-                  ),
-                fit: BoxFit.cover,
-              ),*/
                 ),
-              ),
-            ),
-          ],
-        ));
+                Positioned(
+                  left: 13.0.w,
+                  top: 104.0.h,
+                  child: Container(
+                    width: 393.w,
+                    height: 31.h,
+                    child: buildguli(),
+                  ),
+                ),
+                Positioned(
+                  left: 329.0.w,
+                  top: 56.0.h,
+                  child: Container(
+                    width: 40.w,
+                    height: 40.h,
+                    child: buildavatar(),
+                  ),
+                ),
+                    Positioned(
+                      left: 320.0.w,
+                      top: 47.0.h,
+                      child: Container(
+                        width: 57.w,
+                        height: 56.h,
+                       child:getImage("assets/avatarkuang.png"),
+                      ),
+                    ),
+
+                Positioned(
+                  left: 180.0.w,
+                  top: 158.0.h,
+                  child: Container(
+                    width: 210.w,
+                    height: 30.h,
+                    child: buildDatenow(),
+                  ),
+                ),
+                Positioned(
+                  left: 15.0.w,
+                  top: 134.0.h,
+                  child: Container(
+                    width: 378.w,
+                    height: 167.h,
+                    child: buildDatekuang(),
+                  ),
+                ),
+                    Positioned(
+                      left: 27.0.w,
+                      top: 193.0.h,
+                      child: Container(
+                        width: 324.w,
+                        height: 96.h,
+                        child: buildDate(),
+                      ),
+                    ),
+                    Positioned(
+                      left: 12.0.w,
+                      top: 303.0.h,
+                      child: Container(
+                        width: 303.w,
+                        height: 65.h,
+                        child: buildtask(),
+                      ),
+                    ),
+                Positioned(
+                  left: 332.0.w,
+                  top: 320.0.h,
+                  child: Container(
+                    width: 45.w,
+                    height: 45.h,
+                    child: buildAdd(),
+                  ),
+                ),
+                Positioned(
+                  left: 16.0.w,
+                  top: 369.0.h,
+                  child: Container(
+                    width: 361.w,
+                    height: 632.h,
+                    child: buildDailyPlan(),
+                  ),
+                ),
+              ]),
+            )
+
+        );
   }
 
+  Widget buildHiname() {
+    return Container(
+      child: Text(
+        'Hi,XX',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 64.0,
+          color: Color.fromRGBO(73, 108, 251, 1),
+        ),
+      ),
+    );
+  }
+
+  Widget buildguli() {
+    return Container(
+      child: Text(
+        'Where there is a will, there is a way.喵',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16.0,
+          color: Color.fromRGBO(118, 118, 118, 1),
+        ),
+      ),
+    );
+  }
+
+  Widget buildavatar() {
+    return Flex(direction: Axis.vertical, children: [
+      Flexible(
+        fit: FlexFit.tight,
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: NetworkImage(
+                  'https://img.duotegame.com/article/contents/2022/10/17/2022101795825615.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+    ]);
+  }
+
+  Widget buildDatenow() {
+    return Container(
+      child: Text(
+        DateFormat.MMMM().format(DateTime.now()),
+        style: TextStyle(
+          fontSize: 24,
+          color: Color.fromRGBO(134, 159, 249, 1),
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+Widget buildDatekuang(){
+    return Container(
+      decoration: BoxDecoration(
+    image: DecorationImage(
+    image: AssetImage("assets/Datekuang.png"),
+  fit: BoxFit.cover,
+  ),
+  ),
+    );
+}
   Widget buildDate() {
     return Container(
-      width: 393.w,
-      height: 96.h,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          // 当前日期
-          Text(
-            DateFormat.yMMMd().format(DateTime.now()),
-            style: TextStyle(
-              fontSize: 24,
-              color: Color.fromRGBO(134, 159, 249, 1),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          // 五个按钮
+          // liu个按钮
           Expanded(
             child: Row(
-              //
-              children: List.generate(5, (index) {
-                // 从右往左是当前日到七天前
-                var date = DateTime.now().subtract(Duration(days: index));
+              children: List.generate(6, (index) {
+                var date = DateTime.now().add(Duration(days: index));
                 return Container(
-                    width: 54.w,
-                    height: 96.h,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Color.fromRGBO(134, 159, 249, 1), width: 1)),
-                    //margin: EdgeInsets.all(5),
-                    child: TextButton(
-                      child: Text(DateFormat.d().format(date),
-                          style: TextStyle(
-                            color: Color.fromRGBO(225, 225, 225, 1),
-                            fontSize: 32.0,
-                          )),
-                      onPressed: () {
-                        print(
-                            'Pressed button for date: ${DateFormat.yMMMd().format(date)}');
-                      },
-                    ));
+                  width: 54.w,
+                  height: 96.h,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Colors.transparent, width: 1)),
+                  child: TextButton(
+                    child: Column(
+                        children: <Widget>[
+                          SizedBox(height: 10),
+                    Text(
+                    DateFormat.E().format(date),
+                    style: TextStyle(
+                      color: Color.fromRGBO(225, 225, 225, 1),
+                      fontSize: 14.0,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    DateFormat.d().format(date),
+                    style: TextStyle(
+                      color: Color.fromRGBO(225, 225, 225, 1),
+                      fontSize: 26.0,
+                    )
+                  )
+                    ],
+                  ),
+                  onPressed: () {
+                    print(
+                        'Pressed button for date: ${DateFormat.yMMMd().format(date)}');
+                  },
+                ));
               }),
             ),
           ),
@@ -150,6 +240,18 @@ class _Page1State extends State<Page1> {
     );
   }
 
+  Widget buildtask() {
+    return Container(
+      child: Text(
+        'Task Today',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 48.0,
+          color: Color.fromRGBO(73, 108, 251, 1),
+        ),
+      ),
+    );
+  }
   Widget buildDailyPlan() {
     return Container(
         width: 393,
@@ -159,43 +261,44 @@ class _Page1State extends State<Page1> {
             itemCount: 18,
             itemBuilder: (BuildContext context, int index) {
               return Container(
+                margin:  EdgeInsets.only(bottom: 0),
                 height: 180,
                 child: Row(
                   children: <Widget>[
                     index % 2 == 0
                         ? Expanded(
-                      child: Text(
-                        "09:00----------",
-                        
-                        textAlign: TextAlign.center,
-                      ),
-                    )
+                            child: Text(
+                              "",
+                              textAlign: TextAlign.center,
+                            ),
+                          )
                         : SizedBox(),
                     CircleAvatar(
                       radius: 100,
                       backgroundColor: Colors.transparent,
-                       child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/jutierenwu.png"),
-                            fit: BoxFit.cover,
+                      child: Container(
+                        padding: EdgeInsets.all(0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/jutierenwu.png"),
+                            ),
+                            border: Border.all(
+                              color: Color.fromRGBO(73, 108, 251, 1),
+                              width: 5.0,
+                            ),
+                            shape: BoxShape.circle,
                           ),
-                          border: Border.all(
-                            color: Color.fromRGBO(73, 108, 251, 1),
-                            width: 5.0,
-                          ),
-                          shape: BoxShape.circle,
                         ),
-                      ),
-
+                      )
                     ),
                     index % 2 == 1
                         ? Expanded(
-                      child: Text(
-                        "------------16:30",
-                        textAlign: TextAlign.center,
-                      ),
-                    )
+                            child: Text(
+                              "",
+                              textAlign: TextAlign.center,
+                            ),
+                          )
                         : SizedBox(),
                   ],
                 ),
@@ -207,52 +310,38 @@ class _Page1State extends State<Page1> {
 
   bool isVisible = false;
   Widget buildAdd() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, right: 0, bottom: 0),
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: TextButton(
-          onPressed: () {
-            setState(() {
-              isVisible = true;
-            });
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Dialog(
-                    child: Container(
-                      height: 546,
-                      width: 393,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/addpage.png"),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(""),
-                          const SizedBox(height: 400),
-                          TextButton(
-                            onPressed: () {
-                              setState(() {
-                                isVisible = false;
-                              });
-                            },
-                            child: Text("ADDDD!"),
-                          ),
-                        ],
-                      ),
-                    ));
-              },
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (BuildContext context) {
+            return Container(
+              height: 200.0,
+              child: Column(
+                children: <Widget>[
+                  Text('This is the content of the bottom sheet'),
+                  GestureDetector(
+                    child: Text('Close'),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
             );
           },
-          child: const Text("ADDD?",
-              style: TextStyle(
-                  fontSize: 14, color: Color.fromRGBO(207, 207, 207, 0))),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/addquan.png"),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
+
   }
 }
 

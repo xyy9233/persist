@@ -174,6 +174,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       onTap: () {
+        print("登录");
         login();
       },
     );
