@@ -14,114 +14,125 @@ class Page1 extends StatefulWidget {
 class _Page1State extends State<Page1> {
   get items => 1;
 
+  get habitNames => "pingpang";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/page1.png"),
-              fit: BoxFit.cover,
-            ),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/page1.png"),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Stack(children: [
+        Positioned(
+          left: 12.0.w,
+          top: 25.0.h,
+          child: Container(
+            width: 393.w,
+            height: 88.h,
+            child: buildHiname(),
           ),
-
-              child: Stack(
-                  children: [
-                Positioned(
-                  left: 12.0.w,
-                  top: 25.0.h,
-                  child: Container(
-                    width: 393.w,
-                    height: 88.h,
-                    child: buildHiname(),
-                  ),
-                ),
-                Positioned(
-                  left: 13.0.w,
-                  top: 104.0.h,
-                  child: Container(
-                    width: 393.w,
-                    height: 31.h,
-                    child: buildguli(),
-                  ),
-                ),
-                Positioned(
-                  left: 329.0.w,
-                  top: 56.0.h,
-                  child: Container(
-                    width: 40.w,
-                    height: 40.h,
-                    child: buildavatar(),
-                  ),
-                ),
-                    Positioned(
-                      left: 320.0.w,
-                      top: 47.0.h,
-                      child: Container(
-                        width: 57.w,
-                        height: 56.h,
-                       child:getImage("assets/avatarkuang.png"),
-                      ),
-                    ),
-
-                Positioned(
-                  left: 180.0.w,
-                  top: 158.0.h,
-                  child: Container(
-                    width: 210.w,
-                    height: 30.h,
-                    child: buildDatenow(),
-                  ),
-                ),
-                Positioned(
-                  left: 15.0.w,
-                  top: 134.0.h,
-                  child: Container(
-                    width: 378.w,
-                    height: 167.h,
-                    child: buildDatekuang(),
-                  ),
-                ),
-                    Positioned(
-                      left: 27.0.w,
-                      top: 193.0.h,
-                      child: Container(
-                        width: 324.w,
-                        height: 96.h,
-                        child: buildDate(),
-                      ),
-                    ),
-                    Positioned(
-                      left: 12.0.w,
-                      top: 303.0.h,
-                      child: Container(
-                        width: 303.w,
-                        height: 65.h,
-                        child: buildtask(),
-                      ),
-                    ),
-                Positioned(
-                  left: 332.0.w,
-                  top: 320.0.h,
-                  child: Container(
-                    width: 45.w,
-                    height: 45.h,
-                    child: buildAdd(),
-                  ),
-                ),
-                Positioned(
-                  left: 16.0.w,
-                  top: 369.0.h,
-                  child: Container(
-                    width: 361.w,
-                    height: 632.h,
-                    child: buildDailyPlan(),
-                  ),
-                ),
-              ]),
-            )
-
-        );
+        ),
+        Positioned(
+          left: 13.0.w,
+          top: 104.0.h,
+          child: Container(
+            width: 393.w,
+            height: 31.h,
+            child: buildguli(),
+          ),
+        ),
+        Positioned(
+          left: 329.0.w,
+          top: 56.0.h,
+          child: Container(
+            width: 40.w,
+            height: 40.h,
+            child: buildavatar(),
+          ),
+        ),
+        Positioned(
+          left: 320.0.w,
+          top: 47.0.h,
+          child: Container(
+            width: 57.w,
+            height: 56.h,
+            child: getImage("assets/avatarkuang.png"),
+          ),
+        ),
+        Positioned(
+          left: 180.0.w,
+          top: 158.0.h,
+          child: Container(
+            width: 210.w,
+            height: 30.h,
+            child: buildDatenow(),
+          ),
+        ),
+        Positioned(
+          left: 300.0.w,
+          top: 160.0.h,
+          child: Container(
+            width: 86.w,
+            height: 30.h,
+            child: Text("2023",
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Color.fromRGBO(134, 159, 249, 1),
+                  fontWeight: FontWeight.bold,
+                )),
+          ),
+        ),
+        Positioned(
+          left: 15.0.w,
+          top: 134.0.h,
+          child: Container(
+            width: 378.w,
+            height: 167.h,
+            child: buildDatekuang(),
+          ),
+        ),
+        Positioned(
+          left: 27.0.w,
+          top: 193.0.h,
+          child: Container(
+            width: 324.w,
+            height: 96.h,
+            child: buildDate(),
+          ),
+        ),
+        Positioned(
+          left: 12.0.w,
+          top: 303.0.h,
+          child: Container(
+            width: 303.w,
+            height: 65.h,
+            child: buildtask(),
+          ),
+        ),
+        Positioned(
+          left: 332.0.w,
+          top: 320.0.h,
+          child: Container(
+            width: 45.w,
+            height: 45.h,
+            child: buildAdd(),
+          ),
+        ),
+        Positioned(
+          left: 16.0.w,
+          top: 369.0.h,
+          child: Container(
+            width: 361.w,
+            height: 632.h,
+            child: buildDailyPlan(habitNames),
+          ),
+        ),
+      ]),
+    ));
   }
 
   Widget buildHiname() {
@@ -180,58 +191,67 @@ class _Page1State extends State<Page1> {
       ),
     );
   }
-Widget buildDatekuang(){
+
+  Widget buildDatekuang() {
     return Container(
       decoration: BoxDecoration(
-    image: DecorationImage(
-    image: AssetImage("assets/Datekuang.png"),
-  fit: BoxFit.cover,
-  ),
-  ),
+        image: DecorationImage(
+          image: AssetImage("assets/Datekuang.png"),
+          fit: BoxFit.cover,
+        ),
+      ),
     );
-}
+  }
+
   Widget buildDate() {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          // liu个按钮
+          // 六个按钮
           Expanded(
             child: Row(
               children: List.generate(6, (index) {
-                var date = DateTime.now().add(Duration(days: index));
+                var date = DateTime.now().add(Duration(days: index - 1));
+                var today = DateTime.now();
                 return Container(
-                  width: 54.w,
-                  height: 96.h,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.transparent, width: 1)),
-                  child: TextButton(
-                    child: Column(
+                    width: 54.w,
+                    height: 96.h,
+                    decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Colors.transparent, width: 1)),
+                    child: TextButton(
+                      child: Column(
                         children: <Widget>[
-                          SizedBox(height: 10),
-                    Text(
-                    DateFormat.E().format(date),
-                    style: TextStyle(
-                      color: Color.fromRGBO(225, 225, 225, 1),
-                      fontSize: 14.0,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    DateFormat.d().format(date),
-                    style: TextStyle(
-                      color: Color.fromRGBO(225, 225, 225, 1),
-                      fontSize: 26.0,
-                    )
-                  )
-                    ],
-                  ),
-                  onPressed: () {
-                    print(
-                        'Pressed button for date: ${DateFormat.yMMMd().format(date)}');
-                  },
-                ));
+                          SizedBox(height: 10.h),
+                          Text(
+                            DateFormat.E().format(date),
+                            style: TextStyle(
+                              color: (date.day == today.day &&
+                                      date.month == today.month &&
+                                      date.year == today.year)
+                                  ? Color.fromRGBO(73, 108, 251, 1)
+                                  : Color.fromRGBO(225, 225, 225, 1),
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          SizedBox(height: 10.h),
+                          Text(DateFormat.d().format(date),
+                              style: TextStyle(
+                                color: (date.day == today.day &&
+                                        date.month == today.month &&
+                                        date.year == today.year)
+                                    ? Color.fromRGBO(73, 108, 251, 1)
+                                    : Color.fromRGBO(225, 225, 225, 1),
+                                fontSize: 26.0,
+                              ))
+                        ],
+                      ),
+                      onPressed: () {
+                        print(
+                            'Pressed button for date: ${DateFormat.yMMMd().format(date)}');
+                      },
+                    ));
               }),
             ),
           ),
@@ -252,53 +272,59 @@ Widget buildDatekuang(){
       ),
     );
   }
-  Widget buildDailyPlan() {
+
+  Widget buildDailyPlan(habitNames) {
     return Container(
-        width: 393,
-        height: 700,
+        width: 393.w,
+        height: 700.h,
         child: Container(
           child: ListView.builder(
-            itemCount: 18,
+            itemCount: habitNames.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
-                margin:  EdgeInsets.only(bottom: 0),
-                height: 180,
+                margin: EdgeInsets.only(bottom: 0),
+                height: 180.h,
                 child: Row(
                   children: <Widget>[
                     index % 2 == 0
                         ? Expanded(
                             child: Text(
-                              "",
-                              textAlign: TextAlign.center,
+                            habitNames[index],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22.0,
                             ),
-                          )
+                          ))
                         : SizedBox(),
                     CircleAvatar(
-                      radius: 100,
-                      backgroundColor: Colors.transparent,
-                      child: Container(
-                        padding: EdgeInsets.all(0),
+                        radius: 100.r,
+                        backgroundColor: Colors.transparent,
                         child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("assets/jutierenwu.png"),
+                          padding: EdgeInsets.all(0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage("assets/jutierenwu.png"),
+                              ),
+                              border: Border.all(
+                                color: Color.fromRGBO(73, 108, 251, 1),
+                                width: 5.0.w,
+                              ),
+                              shape: BoxShape.circle,
                             ),
-                            border: Border.all(
-                              color: Color.fromRGBO(73, 108, 251, 1),
-                              width: 5.0,
-                            ),
-                            shape: BoxShape.circle,
                           ),
-                        ),
-                      )
-                    ),
+                        )),
                     index % 2 == 1
                         ? Expanded(
                             child: Text(
-                              "",
-                              textAlign: TextAlign.center,
+                            habitNames[index],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22.0,
                             ),
-                          )
+                          ))
                         : SizedBox(),
                   ],
                 ),
@@ -315,20 +341,8 @@ Widget buildDatekuang(){
         showModalBottomSheet(
           context: context,
           builder: (BuildContext context) {
-            return Container(
-              height: 200.0,
-              child: Column(
-                children: <Widget>[
-                  Text('This is the content of the bottom sheet'),
-                  GestureDetector(
-                    child: Text('Close'),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-            );
+            return SingleChildScrollView(
+                child: AddPage());
           },
         );
       },
@@ -341,10 +355,32 @@ Widget buildDatekuang(){
         ),
       ),
     );
-
   }
 }
 
+Widget AddPage() {
+  return Container(
+    decoration: BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage("assets/page2.png"),
+        fit: BoxFit.cover,
+      ),
+    ),
+     child: Stack(
+      children: [
+      Positioned(
+      left: 16.0.w,
+      top: 416.0.h,
+      child: Container(
+        width: 168.w,
+        height: 48.h,
+        child: Text("hhi"),
+      ),
+     )
+      ]
+     )
+    );
+}
 //手势检测
 /*class _GestureTestState extends State<GestureTest> {
   String _operation = "No Gesture detected!"; //保存事件名

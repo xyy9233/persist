@@ -25,8 +25,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: _pageOptions[_selectedIndex],
       bottomNavigationBar: BottomAppBar(
+        height: 60.0,
         elevation: 10.0,
         shape: CircularNotchedRectangle(),
         color: Color.fromRGBO(73, 108, 251, 1),
@@ -35,7 +37,11 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             IconButton(
-              icon: Icon(Icons.home),
+              icon: Image.asset(
+                _selectedIndex == 0 ? 'assets/1yes.png' : 'assets/1no.png',
+                height: 43.0.h,
+                width: 40.0.w,
+              ),
               onPressed: () {
                 setState(() {
                   _selectedIndex = 0;
@@ -43,7 +49,11 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.favorite),
+              icon: Image.asset(
+                _selectedIndex == 1 ? 'assets/2yes.png' : 'assets/2no.png',
+                height: 43.74.h,
+                width: 40.0.w,
+              ),
               onPressed: () {
                 setState(() {
                   _selectedIndex = 1;
@@ -51,7 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.search),
+              icon: Image.asset(
+                _selectedIndex == 2 ? 'assets/3yes.png' : 'assets/3no.png',
+                height: 60.0.h,
+                width: 90.0.w,
+              ),
               onPressed: () {
                 setState(() {
                   _selectedIndex = 2;
@@ -59,7 +73,11 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.settings),
+              icon: Image.asset(
+                _selectedIndex == 3 ? 'assets/4no.png' : 'assets/4no.png',
+                height: 41.59.h,
+                width: 43.0.w,
+              ),
               onPressed: () {
                 setState(() {
                   _selectedIndex = 3;
