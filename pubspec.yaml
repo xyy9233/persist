@@ -96,11 +96,12 @@ flutter:
     - assets/3yes.png
     - assets/3no.png
     - assets/4no.png
-    - assets/pingpang.png
-    - assets/jutie.png
-    - assets/jutierenwu.png
-    - assets/zidingyi.png
-    - assets/jutiechengjiutianshu.png
+    - assets/jutieribiao.png
+    - assets/jutiezongbiao.png
+    - assets/zidingyizongbiao.png
+    - assets/pingpangzongbiao.png
+    - assets/pingpangribiao.png
+    - assets/yumaoqiuribiao.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

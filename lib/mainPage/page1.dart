@@ -3,136 +3,141 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:persist/mainPage/homepage.dart';
 
 class Page1 extends StatefulWidget {
-  const Page1({Key? key}) : super(key: key);
+  final String uid;
+  const Page1({Key? key, required this.uid}) : super(key: key);
 
   @override
   State<Page1> createState() => _Page1State();
 }
 
 class _Page1State extends State<Page1> {
-  get items => 1;
-
-  get habitNames => "pingpang";
+  void initState() {
+    super.initState();
+    print(widget.uid);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/page1.png"),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Stack(children: [
-        Positioned(
-          left: 12.0.w,
-          top: 25.0.h,
-          child: Container(
-            width: 393.w,
-            height: 88.h,
-            child: buildHiname(),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/page1.png"),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        Positioned(
-          left: 13.0.w,
-          top: 104.0.h,
-          child: Container(
-            width: 393.w,
-            height: 31.h,
-            child: buildguli(),
-          ),
-        ),
-        Positioned(
-          left: 329.0.w,
-          top: 56.0.h,
-          child: Container(
-            width: 40.w,
-            height: 40.h,
-            child: buildavatar(),
-          ),
-        ),
-        Positioned(
-          left: 320.0.w,
-          top: 47.0.h,
-          child: Container(
-            width: 57.w,
-            height: 56.h,
-            child: getImage("assets/avatarkuang.png"),
-          ),
-        ),
-        Positioned(
-          left: 180.0.w,
-          top: 158.0.h,
-          child: Container(
-            width: 210.w,
-            height: 30.h,
-            child: buildDatenow(),
-          ),
-        ),
-        Positioned(
-          left: 300.0.w,
-          top: 160.0.h,
-          child: Container(
-            width: 86.w,
-            height: 30.h,
-            child: Text("2023",
-                style: TextStyle(
-                  fontSize: 22,
-                  color: Color.fromRGBO(134, 159, 249, 1),
-                  fontWeight: FontWeight.bold,
-                )),
-          ),
-        ),
-        Positioned(
-          left: 15.0.w,
-          top: 134.0.h,
-          child: Container(
-            width: 378.w,
-            height: 167.h,
-            child: buildDatekuang(),
-          ),
-        ),
-        Positioned(
-          left: 27.0.w,
-          top: 193.0.h,
-          child: Container(
-            width: 324.w,
-            height: 96.h,
-            child: buildDate(),
-          ),
-        ),
-        Positioned(
-          left: 12.0.w,
-          top: 303.0.h,
-          child: Container(
-            width: 303.w,
-            height: 65.h,
-            child: buildtask(),
-          ),
-        ),
-        Positioned(
-          left: 332.0.w,
-          top: 320.0.h,
-          child: Container(
-            width: 45.w,
-            height: 45.h,
-            child: buildAdd(),
-          ),
-        ),
-        Positioned(
-          left: 16.0.w,
-          top: 369.0.h,
-          child: Container(
-            width: 361.w,
-            height: 632.h,
-            child: buildDailyPlan(habitNames),
-          ),
-        ),
-      ]),
-    ));
+          child: Stack(children: [
+            Positioned(
+              left: 12.0.w,
+              top: 25.0.h,
+              child: Container(
+                width: 393.w,
+                height: 88.h,
+                child: buildHiname(),
+              ),
+            ),
+            Positioned(
+              left: 13.0.w,
+              top: 104.0.h,
+              child: Container(
+                width: 393.w,
+                height: 31.h,
+                child: buildguli(),
+              ),
+            ),
+            Positioned(
+              left: 329.0.w,
+              top: 56.0.h,
+              child: Container(
+                width: 40.w,
+                height: 40.h,
+                child: buildavatar(),
+              ),
+            ),
+            Positioned(
+              left: 320.0.w,
+              top: 47.0.h,
+              child: Container(
+                width: 57.w,
+                height: 56.h,
+                child: getImage("assets/avatarkuang.png"),
+              ),
+            ),
+            Positioned(
+              left: 180.0.w,
+              top: 158.0.h,
+              child: Container(
+                width: 210.w,
+                height: 30.h,
+                child: buildDatenow(),
+              ),
+            ),
+            Positioned(
+              left: 300.0.w,
+              top: 160.0.h,
+              child: Container(
+                width: 86.w,
+                height: 30.h,
+                child: Text("2023",
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Color.fromRGBO(134, 159, 249, 1),
+                      fontWeight: FontWeight.bold,
+                    )),
+              ),
+            ),
+            Positioned(
+              left: 15.0.w,
+              top: 134.0.h,
+              child: Container(
+                width: 378.w,
+                height: 167.h,
+                child: buildDatekuang(),
+              ),
+            ),
+            Positioned(
+              left: 27.0.w,
+              top: 193.0.h,
+              child: Container(
+                width: 324.w,
+                height: 96.h,
+                child: buildDate(),
+              ),
+            ),
+            Positioned(
+              left: 12.0.w,
+              top: 303.0.h,
+              child: Container(
+                width: 303.w,
+                height: 65.h,
+                child: buildtask(),
+              ),
+            ),
+            Positioned(
+              left: 332.0.w,
+              top: 320.0.h,
+              child: Container(
+                width: 45.w,
+                height: 45.h,
+                child: buildAdd(),
+              ),
+            ),
+            Positioned(
+              left: 16.0.w,
+              top: 369.0.h,
+              child: Container(
+                width: 361.w,
+                height: 632.h,
+                child: buildDailyPlan(),
+              ),
+            ),
+          ]),
+        ));
   }
 
   Widget buildHiname() {
@@ -219,7 +224,7 @@ class _Page1State extends State<Page1> {
                     height: 96.h,
                     decoration: BoxDecoration(
                         border:
-                            Border.all(color: Colors.transparent, width: 1)),
+                        Border.all(color: Colors.transparent, width: 1)),
                     child: TextButton(
                       child: Column(
                         children: <Widget>[
@@ -228,8 +233,8 @@ class _Page1State extends State<Page1> {
                             DateFormat.E().format(date),
                             style: TextStyle(
                               color: (date.day == today.day &&
-                                      date.month == today.month &&
-                                      date.year == today.year)
+                                  date.month == today.month &&
+                                  date.year == today.year)
                                   ? Color.fromRGBO(73, 108, 251, 1)
                                   : Color.fromRGBO(225, 225, 225, 1),
                               fontSize: 14.0,
@@ -239,8 +244,8 @@ class _Page1State extends State<Page1> {
                           Text(DateFormat.d().format(date),
                               style: TextStyle(
                                 color: (date.day == today.day &&
-                                        date.month == today.month &&
-                                        date.year == today.year)
+                                    date.month == today.month &&
+                                    date.year == today.year)
                                     ? Color.fromRGBO(73, 108, 251, 1)
                                     : Color.fromRGBO(225, 225, 225, 1),
                                 fontSize: 26.0,
@@ -249,7 +254,8 @@ class _Page1State extends State<Page1> {
                       ),
                       onPressed: () {
                         print(
-                            'Pressed button for date: ${DateFormat.yMMMd().format(date)}');
+                            'Pressed button for date: ${DateFormat.yMMMd()
+                                .format(date)}');
                       },
                     ));
               }),
@@ -273,31 +279,35 @@ class _Page1State extends State<Page1> {
     );
   }
 
-  Widget buildDailyPlan(habitNames) {
+
+  Widget buildDailyPlan() {
     return Container(
-        width: 393.w,
-        height: 700.h,
-        child: Container(
-          child: ListView.builder(
-            itemCount: habitNames.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                margin: EdgeInsets.only(bottom: 0),
-                height: 180.h,
-                child: Row(
-                  children: <Widget>[
-                    index % 2 == 0
-                        ? Expanded(
-                            child: Text(
-                            habitNames[index],
+      width: 393.w,
+      height: 700.h,
+      child: FutureBuilder<List<dynamic>>(
+        future: fetchData(),
+        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data?.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  margin: EdgeInsets.only(bottom: 0),
+                  height: 180.h,
+                  child: Row(
+                    children: <Widget>[
+                      index % 2 == 0
+                          ? Expanded(
+                          child: Text(
+                            snapshot.data![index]["habitName"],
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 22.0,
                             ),
                           ))
-                        : SizedBox(),
-                    CircleAvatar(
+                          : SizedBox(),
+                      CircleAvatar(
                         radius: 100.r,
                         backgroundColor: Colors.transparent,
                         child: Container(
@@ -314,27 +324,36 @@ class _Page1State extends State<Page1> {
                               shape: BoxShape.circle,
                             ),
                           ),
-                        )),
-                    index % 2 == 1
-                        ? Expanded(
-                            child: Text(
-                            habitNames[index],
+                        ),
+                      ),
+                      index % 2 == 1
+                          ? Expanded(
+                          child: Text(
+                            snapshot.data![index]["habitName"],
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 22.0,
                             ),
                           ))
-                        : SizedBox(),
-                  ],
-                ),
-              );
-            },
-          ),
-        ));
+                          : SizedBox(),
+                    ],
+                  ),
+                );
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+          return CircularProgressIndicator();
+        },
+      ),
+    );
   }
 
+
   bool isVisible = false;
+
   Widget buildAdd() {
     return GestureDetector(
       onTap: () {
@@ -356,31 +375,41 @@ class _Page1State extends State<Page1> {
       ),
     );
   }
-}
 
-Widget AddPage() {
-  return Container(
-    decoration: BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage("assets/page2.png"),
-        fit: BoxFit.cover,
-      ),
-    ),
-     child: Stack(
-      children: [
-      Positioned(
-      left: 16.0.w,
-      top: 416.0.h,
-      child: Container(
-        width: 168.w,
-        height: 48.h,
-        child: Text("hhi"),
-      ),
-     )
-      ]
-     )
+  Future<List<dynamic>> fetchData() async {
+    final response = await http.get(
+        ('http://8.130.41.221:8081/habit/userAllHabit?username=%22' + uid + '%22') as Uri);
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  Widget AddPage() {
+    return Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/page2.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Stack(
+            children: [
+              Positioned(
+                left: 16.0.w,
+                top: 416.0.h,
+                child: Container(
+                  width: 168.w,
+                  height: 48.h,
+                  child: Text("hhi"),
+                ),
+              )
+            ]
+        )
     );
-}
+  }
+
 //手势检测
 /*class _GestureTestState extends State<GestureTest> {
   String _operation = "No Gesture detected!"; //保存事件名
@@ -411,6 +440,7 @@ Widget AddPage() {
     });
   }
 }*/
-Widget getImage(String imageUrl) {
-  return Image.asset(imageUrl);
+  Widget getImage(String imageUrl) {
+    return Image.asset(imageUrl);
+  }
 }

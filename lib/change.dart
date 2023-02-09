@@ -1,41 +1,39 @@
-/*
 import 'dart:convert';
-RiBaos riBaosFromJson(String str) => RiBaos.fromJson(json.decode(str));
-String riBaosToJson(RiBaos data) => json.encode(data.toJson());
-*/
 
-class RiBaos {
-  final String date;
-  final List<Story> topStories;
-  final List<Story> stories;
+class Habits {
+  final int modifiedTime;
+  final String hid;
+  final String uid;
+  final String name;
+  final String target;
+  final String encourageSentence;
+  final String startDate;
+  final int preTime;
+  final int consistDay;
+  final int completeDay;
+  final String icon;
+  final String statement;
+  final bool isDefault;
+  final int processingDay;
+  final int createTime;
+  final String createUser;
 
-
-
-
-  RiBaos.fromJson(Map<String, dynamic> json)
-      : this.date = json["date"],
-        this.stories =
-        List<Story>.from(json["stories"].map((x) => Story.fromJson(x))),
-        this.topStories =
-        (json['top_stories']==null)?[]:
-        List<Story>.from(json["top_stories"].map((x) => Story.fromJson(x)))
-  ;}
-
-
-
-class Story {
-  final String title;
-  final String url;
-  final String hint;
-  final String image;
-  //final String imageHue;
-
-  Story.fromJson(Map<String, dynamic> json)
-      : this.title = json['title'],
-        this.url = json['url'],
-        this.hint = json['hint'],
-  //this.imageHue = json['image_hue'],
-  // 这里需要做个判断，[top_stories]中的字段为`image`，而[stories]中的字段为`images`
-        this.image = (json['images'] == null) ? json['image'] :
-        List<String>.from(json["images"]).first;
+  Habits.fromJson(Map<String, dynamic> json)
+      : this.modifiedTime = json['modifiedTime'],
+        this.hid = json['hid'],
+        this.uid = json['uid'],
+        this.name = json['name'],
+        this.target = json['target'],
+        this.encourageSentence = json['encourage_sentence'],
+        this.startDate = json['start_date'],
+        this.preTime = json['pre_time'],
+        this.consistDay = json['consist_day'],
+        this.completeDay = json['complete_day'],
+        this.icon = json['icon'],
+        this.statement = json['statement'],
+        this.isDefault = json['is_default'],
+        this.processingDay = json['processing_day'],
+        this.createTime = json['createTime'],
+        this.createUser = json['createUser'];
 }
+

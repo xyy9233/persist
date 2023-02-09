@@ -274,7 +274,7 @@ class _RegistretionPageState extends State<RegistretionPage> {
   Future<void> registerUser() async {
     var url = Uri.parse('http://8.130.41.221:8080/users/reg');
     var body = {'username': username, 'password': password};
-    http.get(url, headers: body).then((response) {
+    http.post(url, headers: body).then((response) {
       print('服务器响应: ${response.statusCode}');
       if (response.statusCode == 200) {
         print('Successful registration');

@@ -196,10 +196,11 @@ class _LoginPageState extends State<LoginPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => RegistretionPage(
-                        key: ValueKey('login_page'),
-                        title: '注册',
-                      ),
+                      builder: (context) =>
+                          RegistretionPage(
+                            key: ValueKey('login_page'),
+                            title: '注册',
+                          ),
                     ));
               })
         ],
@@ -262,7 +263,10 @@ class _LoginPageState extends State<LoginPage> {
                       print("1111");
                       _eyeColor = (_isObscure
                           ? Color.fromRGBO(73, 108, 251, 1)
-                          : Theme.of(context).iconTheme.color)!;
+                          : Theme
+                          .of(context)
+                          .iconTheme
+                          .color)!;
                       print(_eyeColor);
                       print("2222");
                     });
@@ -301,17 +305,23 @@ class _LoginPageState extends State<LoginPage> {
     return Image.asset(imageUrl);
   }
 
+  late String uid;
+
   Future<void> login() async {
     var body = {'username': username, 'password': password};
     var request =
-        http.Request('GET', Uri.parse('http://8.130.41.221:8081/users/login'));
+    http.Request('GET', Uri.parse('http://8.130.41.221:8081/users/login'));
     request.headers.addAll(body);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
+      // 解析登录接口的返回数据
+      var data = json.decode(await response.stream.bytesToString());
+      // 获取 uid
+      uid = data['uid'];
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MyHomePage(token: "login-page"),
+          builder: (context) => MyHomePage(token: "login-page", uid: uid),
         ),
       );
     } else {
