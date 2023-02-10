@@ -18,6 +18,7 @@ class Habits {
   final int createTime;
   final String createUser;
 
+
   Habits.fromJson(Map<String, dynamic> json)
       : this.modifiedTime = json['modifiedTime'],
         this.hid = json['hid'],

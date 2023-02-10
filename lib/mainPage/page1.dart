@@ -8,18 +8,14 @@ import 'package:http/http.dart' as http;
 import 'package:persist/mainPage/homepage.dart';
 
 class Page1 extends StatefulWidget {
-  final String uid;
-  const Page1({Key? key, required this.uid}) : super(key: key);
+
 
   @override
-  State<Page1> createState() => _Page1State();
+  _Page1State createState() => _Page1State();
 }
 
 class _Page1State extends State<Page1> {
-  void initState() {
-    super.initState();
-    print(widget.uid);
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -285,7 +281,7 @@ class _Page1State extends State<Page1> {
       width: 393.w,
       height: 700.h,
       child: FutureBuilder<List<dynamic>>(
-        future: fetchData(),
+        future: getData(),
         builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -376,15 +372,7 @@ class _Page1State extends State<Page1> {
     );
   }
 
-  Future<List<dynamic>> fetchData() async {
-    final response = await http.get(
-        ('http://8.130.41.221:8081/habit/userAllHabit?username=%22' + uid + '%22') as Uri);
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
+
 
   Widget AddPage() {
     return Container(
