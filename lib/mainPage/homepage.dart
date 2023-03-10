@@ -6,18 +6,19 @@ import 'package:persist/mainPage/page4.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../change.dart';
 import 'change.dart';
 
 class MyHomePage extends StatefulWidget {
   late final String token;
   late final String uid;
-  MyHomePage({required this.token, required String uid});
+  MyHomePage({required this.token, required int uid});
 
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 
-
+/*
   Future<Habits> getData() async {
     final response = await http.get(('http://8.130.41.221:8081/habit/userAllHabit?username=%22' + uid + '%22') as Uri);
     if (response.statusCode == 200) {
@@ -25,7 +26,7 @@ class MyHomePage extends StatefulWidget {
     } else {
       throw Exception('Failed to load data');
     }
-  }
+  }*/
 
 }
 

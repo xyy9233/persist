@@ -7,9 +7,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:persist/mainPage/homepage.dart';
 
+
+
 class Page1 extends StatefulWidget {
 
-
+  const Page1({Key? key,}) : super(key: key);
   @override
   _Page1State createState() => _Page1State();
 }
@@ -281,12 +283,12 @@ class _Page1State extends State<Page1> {
       width: 393.w,
       height: 700.h,
       child: FutureBuilder<List<dynamic>>(
-        future: getData(),
+        //future: getData(),
         builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
               itemCount: snapshot.data?.length,
-              itemBuilder: (BuildContext context, int index) {
+              itemBuilder: (BuildContext context, dynamic index) {
                 return Container(
                   margin: EdgeInsets.only(bottom: 0),
                   height: 180.h,

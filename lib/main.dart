@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'ChangeNotifierProvider.dart';
 import 'common/Global.dart';
+import 'loginpage.dart';
 import 'mainPage/homepage.dart';
 
 void main() {
@@ -32,8 +33,7 @@ class MyApp extends StatelessWidget {
               ),
             ],
             child: MaterialApp(
-                home: MyHomePage(token: 'login-page',)
-              //LoginPage(key: ValueKey('login_page'), title: '登录',),
+                home: LoginPage(key: ValueKey('login_page'), title: '登录',),
             ),
           );
         }

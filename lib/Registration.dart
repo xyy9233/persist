@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:persist/Registration.dart';
 import 'package:http/http.dart' as http;
@@ -272,16 +273,24 @@ class _RegistretionPageState extends State<RegistretionPage> {
 
 
   Future<void> registerUser() async {
-    var url = Uri.parse('http://8.130.41.221:8080/users/reg');
-    var body = {'username': username, 'password': password};
+    //var url = Uri.parse('http://8.130.41.221:8080/users/reg');
+    //var body = {'username': username, 'password': password};
+    Map<String,dynamic> map = Map();
+    map['username'] = username; map['password'] = password;
+    String dio_url = 'http://8.130.41.221:8080/users/reg?username=${username}/password=${password}';
+    Dio dio = Dio();
+    var response = await dio.post(dio_url,data: map);
+    print(response.data);
+    /*
     http.post(url, headers: body).then((response) {
       print('服务器响应: ${response.statusCode}');
       if (response.statusCode == 200) {
+
         print('Successful registration');
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => MyHomePage(token: "login-page"),
+            builder: (context) => MyHomePage(token: "login-page",uid: ,),
           ),
         );
       }
@@ -294,7 +303,7 @@ class _RegistretionPageState extends State<RegistretionPage> {
           },
         );
       }
-    }
-    );
+    }*/
+
   }
 }

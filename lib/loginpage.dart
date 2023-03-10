@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:persist/Registration.dart';
 import 'package:http/http.dart' as http;
@@ -6,6 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'mainPage/homepage.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:persist/lib/models/user.dart';
+
+import 'models/user.dart';
 
 class User {
   final String username;
@@ -102,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            ///Register
+            /// Register
             Positioned(
               left: 122.0.w,
               top: 791.0.h,
@@ -174,7 +178,6 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       onTap: () {
-        print("登录");
         login();
       },
     );
@@ -305,19 +308,20 @@ class _LoginPageState extends State<LoginPage> {
     return Image.asset(imageUrl);
   }
 
-  late String uid;
+
 
   Future<void> login() async {
-    var body = {'username': username, 'password': password};
-    var request =
-    http.Request('GET', Uri.parse('http://8.130.41.221:8081/users/login'));
-    request.headers.addAll(body);
-    http.StreamedResponse response = await request.send();
+
+    String dioUrl = 'http://8.130.41.221:8081/users/login?username=${username}&password=${password}';
+    print(dioUrl);
+    Dio dio = Dio();
+    var response = await dio.post(dioUrl);
+    print(response.data);
     if (response.statusCode == 200) {
       // 解析登录接口的返回数据
-      var data = json.decode(await response.stream.bytesToString());
-      // 获取 uid
-      uid = data['uid'];
+      //var data = json.decode(await response.stream.bytesToString());
+      var data=Data.fromJson(response.data["data"]);
+      int uid =data.uid ;
       Navigator.push(
         context,
         MaterialPageRoute(
