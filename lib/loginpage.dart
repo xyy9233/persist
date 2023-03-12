@@ -1,14 +1,9 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:persist/Registration.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'mainPage/homepage.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:persist/lib/models/user.dart';
-
 import 'models/user.dart';
 
 class User {
@@ -199,11 +194,10 @@ class _LoginPageState extends State<LoginPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          RegistretionPage(
-                            key: ValueKey('login_page'),
-                            title: '注册',
-                          ),
+                      builder: (context) => RegistretionPage(
+                        key: ValueKey('login_page'),
+                        title: '注册',
+                      ),
                     ));
               })
         ],
@@ -259,17 +253,13 @@ class _LoginPageState extends State<LoginPage> {
                     color: _eyeColor,
                   ),
                   onPressed: () {
-                    // 修改 state 内部变量, 且需要界面内容更新, 需要使用 setState()
                     setState(() {
                       _isObscure = !_isObscure;
                       print(_isObscure);
                       print("1111");
                       _eyeColor = (_isObscure
                           ? Color.fromRGBO(73, 108, 251, 1)
-                          : Theme
-                          .of(context)
-                          .iconTheme
-                          .color)!;
+                          : Theme.of(context).iconTheme.color)!;
                       print(_eyeColor);
                       print("2222");
                     });
@@ -308,11 +298,9 @@ class _LoginPageState extends State<LoginPage> {
     return Image.asset(imageUrl);
   }
 
-
-
   Future<void> login() async {
-
-    String dioUrl = 'http://8.130.41.221:8081/users/login?username=${username}&password=${password}';
+    String dioUrl =
+        'http://8.130.41.221:8081/users/login?username=${username}&password=${password}';
     print(dioUrl);
     Dio dio = Dio();
     var response = await dio.post(dioUrl);
@@ -320,8 +308,8 @@ class _LoginPageState extends State<LoginPage> {
     if (response.statusCode == 200) {
       // 解析登录接口的返回数据
       //var data = json.decode(await response.stream.bytesToString());
-      var data=Data.fromJson(response.data["data"]);
-      int uid =data.uid ;
+      var data = Data.fromJson(response.data["data"]);
+      int uid = data.uid;
       Navigator.push(
         context,
         MaterialPageRoute(

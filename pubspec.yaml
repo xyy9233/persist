@@ -102,6 +102,8 @@ flutter:
     - assets/pingpangzongbiao.png
     - assets/pingpangribiao.png
     - assets/yumaoqiuribiao.png
+    - assets/registration.png
+    - assets/4yes.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

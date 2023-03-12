@@ -5,6 +5,7 @@ import 'ChangeNotifierProvider.dart';
 import 'common/Global.dart';
 import 'loginpage.dart';
 import 'mainPage/homepage.dart';
+import 'Registration.dart';
 
 void main() {
 
@@ -33,7 +34,9 @@ class MyApp extends StatelessWidget {
               ),
             ],
             child: MaterialApp(
-                home: LoginPage(key: ValueKey('login_page'), title: '登录',),
+                home: //MyHomePage(token: 'HomePage',uid: 12,)
+                RegistretionPage(key:ValueKey('Registration'), title: '注册',)
+              //LoginPage(key:ValueKey('Registration'), title: '登录',)
             ),
           );
         }

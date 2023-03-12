@@ -95,8 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               icon: Image.asset(
                 _selectedIndex == 2 ? 'assets/3yes.png' : 'assets/3no.png',
-                height: 60.0.h,
-                width: 90.0.w,
+                height: 41.59.h,
+                width: 43.0.w,
               ),
               onPressed: () {
                 setState(() {
@@ -106,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             IconButton(
               icon: Image.asset(
-                _selectedIndex == 3 ? 'assets/4no.png' : 'assets/4no.png',
+                _selectedIndex == 3 ? 'assets/4yes.png' : 'assets/4no.png',
                 height: 41.59.h,
                 width: 43.0.w,
               ),

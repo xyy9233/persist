@@ -1,12 +1,6 @@
-import 'dart:convert';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:persist/Registration.dart';
-import 'package:http/http.dart' as http;
 import 'package:persist/loginpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'mainPage/homepage.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class User {
@@ -38,9 +32,12 @@ class RegistretionPage extends StatefulWidget {
 
 class _RegistretionPageState extends State<RegistretionPage> {
   final _formKey = GlobalKey<FormState>();
-  String username = "test";
-  String password = "123";
-  bool _isObscure = true;
+  TextEditingController name =TextEditingController();
+  TextEditingController Email =TextEditingController();
+  TextEditingController password =TextEditingController();
+  TextEditingController Confirmpassword =TextEditingController();
+  bool _isObscure1 = true;
+  bool _isObscure2 = true;
   Color _eyeColor = Color.fromRGBO(73, 108, 251, 1);
 
   @override
@@ -50,38 +47,137 @@ class _RegistretionPageState extends State<RegistretionPage> {
         body: Stack(
           key: _formKey,
           children: [
+            ///注册背景
             Positioned(
               left: 0.0.w,
               top: 0.0.h,
               child: Container(
                 width: 393.w,
-                height: 390.h,
-                child: getImage("assets/loginback.png"),
+                height: 852.h,
+                child: getImage("assets/registration.png"),
               ),
             ),
+
+            ///标题
             Positioned(
-              left: 57.0.w,
-              top: 353.0.h,
+              left: 36.0.w,
+              top: 156.0.h,
               child: Container(
-                width: 276.w,
-                height: 80.h,
-                alignment: Alignment.center,
-                child: getImage("assets/biaoti.png"),
-              ),
+                  width: 241.w,
+                  height: 40.h,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Create account",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 32.0,
+                    ),
+                  )),
+            ),
+
+            ///用户名
+            Positioned(
+              left: 36.0.w,
+              top: 220.0.h,
+              child: Container(
+                  width: 88.w,
+                  height: 20.h,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Username",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  )),
             ),
             Positioned(
               left: 36.0.w,
-              top: 432.0.h,
+              top: 244.0.h,
               child: Container(
-                width: 357.w,
-                height: 179.h,
-                child: getImage("assets/zhanghaomimakuang.png"),
+                width: 321.w,
+                height: 48.h,
+                child: buildnameTextField(),
               ),
             ),
-            ///RegistretionButton
+
+            ///邮箱
             Positioned(
               left: 36.0.w,
-              top: 739.0.h,
+              top: 312.0.h,
+              child: Container(
+                  width: 50.w,
+                  height: 20.h,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Email",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  )),
+            ),
+            Positioned(
+              left: 36.0.w,
+              top: 336.0.h,
+              child: Container(
+                width: 321.w,
+                height: 48.h,
+                child: buildEmailTextField(),
+              ),
+            ),
+
+            ///密码
+            Positioned(
+              left: 36.0.w,
+              top: 404.0.h,
+              child: Container(
+                  height: 20.h,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Password",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  )),
+            ),
+            Positioned(
+              left: 36.0.w,
+              top: 428.0.h,
+              child: Container(
+                width: 321.w,
+                height: 48.h,
+                child: buildpasswordTextField(context),
+              ),
+            ),
+
+            ///确认密码
+            Positioned(
+              left: 37.0.w,
+              top: 496.0.h,
+              child: Container(
+                  width: 138.w,
+                  height: 20.h,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Confirm Password",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  )),
+            ),
+            Positioned(
+              left: 36.0.w,
+              top: 520.0.h,
+              child: Container(
+                width: 321.w,
+                height: 48.h,
+                child: buildConfirmpasswordTextField(),
+              ),
+            ),
+
+            ///按钮
+            Positioned(
+              left: 36.0.w,
+              top: 612.0.h,
               child: Container(
                 width: 321.w,
                 height: 48.h,
@@ -91,57 +187,236 @@ class _RegistretionPageState extends State<RegistretionPage> {
                 child: buildRegistretionButton(context),
               ),
             ),
-            ///Registretion
+
+            ///登录口
             Positioned(
               left: 132.0.w,
               top: 791.0.h,
               child: Container(
-                child: buildRegisterText(context),
+                child: buildLogininText(context),
               ),
             ),
-            ///账号
-            Positioned(
-              left: 36.0.w,
-              top: 492.0.h,
-              child: Container(
-                width: 321.w,
-                height: 48.h,
-                child: buildnameTextField(),
-              ),
-            ),
-            ///密码
-            Positioned(
-              left: 60.0.w,
-              top: 560.0.h,
-              child: Container(
-                width: 300.w,
-                height: 48.h,
-                child: buildpasswordTextField(context),
-              ),
-            ),
-            /*///remember me
-            Positioned(
-              left: 42.0.w,
-              top: 627.0.h,
-              child: Text(
-                  "Remember  me",
-                  style: TextStyle(
-                    color: Color.fromRGBO(135, 135, 135, 1),
-                    //fontWeight: FontWeight.bold,
-                  )
-              ),
-            ),
-            Positioned(
-              left: 6.0.w,
-              top: 620.0.h,
-              child: Container(
-                width: 36.w,
-                height: 36.h,
-                child: getImage("assets/rememberok.png"),
-              ),
-            ),*/
           ],
         ));
+  }
+
+  Widget buildnameTextField() {
+    return Container(
+        width: 45.w,
+        height: 321.w,
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(164, 182, 253, 1),
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        alignment: Alignment.centerLeft,
+        child: TextFormField(
+          controller: name,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(left: 10, bottom: 4),
+            hintText: 'Your username',
+            hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
+            border: InputBorder.none,
+          ),
+          style: TextStyle(
+            color: Colors.white,
+          ),
+          validator: (v) {
+            return v!.trim().isNotEmpty ? null : "用户名不能为空";
+          },
+
+        ));
+
+    /* Container(
+        height: 45.h,
+        width: 321.w,
+        margin: EdgeInsets.only(left: 25.w, top: 0.h, right: 33.w),
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        child: TextFormField(
+          decoration: InputDecoration(
+            hintText: 'Username',
+            hintStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 16.sp
+            ),
+            border: InputBorder.none,
+
+          ),
+          validator: (v) {
+            var nameReg = RegExp(r"^[a-zA-Z0-9]+$");
+            if (!nameReg.hasMatch(v!)) {
+              return '只能输入字母和数字';
+            }
+            return "test";
+          },
+          onChanged: (value) => username = value,
+          style: TextStyle(color: Colors.white),
+        ));*/
+  }
+
+  Widget buildEmailTextField() {
+    return Container(
+      width: 45.w,
+      height: 321.w,
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(164, 182, 253, 1),
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Center(
+        child: TextFormField(
+          controller: Email,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(left: 10, bottom: 4),
+            hintText: 'Your email address',
+            hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
+            border: InputBorder.none,
+          ),
+          validator: (v) {
+            return v!.trim().length > 5 ? null : "密码不能少于6位";
+          },
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildpasswordTextField(BuildContext context) {
+    return Container(
+      width: 45.w,
+      height: 321.w,
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(164, 182, 253, 1),
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Center(
+        child: TextField(
+          decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10, top: 8),
+              hintText: 'Must be more than 8 characters',
+              hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
+              border: InputBorder.none,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  Icons.remove_red_eye,
+                  color: _eyeColor,
+                ),
+                onPressed: () {
+                  print("1111");
+                  setState(() {
+                    _isObscure1 = !_isObscure1;
+                    print(_isObscure1);
+
+                    _eyeColor = (_isObscure1
+                        ? Color.fromRGBO(73, 108, 251, 1)
+                        : Theme.of(context).iconTheme.color)!;
+                    print(_eyeColor);
+                    print("2222");
+                  });
+                },
+              )),
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildConfirmpasswordTextField() {
+    return Container(
+      width: 45.w,
+      height: 321.w,
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(164, 182, 253, 1),
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Center(
+        child: TextField(
+          decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 10, top: 8),
+              hintText: 'Repeat password',
+              hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
+              border: InputBorder.none,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  Icons.remove_red_eye,
+                  color: _eyeColor,
+                ),
+                onPressed: () {
+                  // 修改 state 内部变量, 且需要界面内容更新, 需要使用 setState()
+                  setState(() {
+                    _isObscure2 = !_isObscure2;
+                    print(_isObscure2);
+                    print("1111");
+                    _eyeColor = (_isObscure2
+                        ? Color.fromRGBO(73, 108, 251, 1)
+                        : Theme.of(context).iconTheme.color)!;
+                    print(_eyeColor);
+                    print("2222");
+                  });
+                },
+              )),
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget getImage(String imageUrl) {
+    return Image.asset(imageUrl);
+  }
+
+  Widget ShuruContainer(String biaoti, String hint, String value) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          child: Text(
+            biaoti,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: 16.0,
+            ),
+          ),
+        ),
+        SizedBox(height: 5),
+        Container(
+          width: 45.0,
+          height: 321.0,
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(164, 182, 253, 1),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Center(
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: hint,
+                hintStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                ),
+                border: InputBorder.none,
+              ),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   Widget buildRegistretionButton(BuildContext context) {
@@ -162,14 +437,12 @@ class _RegistretionPageState extends State<RegistretionPage> {
         ),
       ),
       onTap: () {
-        registerUser();
+        //registerUser();
       },
     );
-
-
   }
 
-  Widget buildRegisterText(context) {
+  Widget buildLogininText(context) {
     return Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -183,20 +456,19 @@ class _RegistretionPageState extends State<RegistretionPage> {
                       color: Color.fromRGBO(35, 36, 79, 1), fontSize: 8.sp)),
               onLongPress: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LoginPage(key: ValueKey('login_page'), title: '登录',))
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => LoginPage(
+                              key: ValueKey('login_page'),
+                              title: '登录',
+                            )));
               })
         ],
       ),
     );
   }
 
-
-  Widget buildpasswordTextField(BuildContext context) {
-    return Container(
-        child: TextFormField(
+/* child: TextFormField(
             obscureText: _isObscure,
             // 是否显示文字
             onSaved: (v) => password = v!,
@@ -228,82 +500,13 @@ class _RegistretionPageState extends State<RegistretionPage> {
                       print("1111");
                       _eyeColor = (_isObscure
                           ? Color.fromRGBO(73, 108, 251, 1)
-                          : Theme.of(context).iconTheme.color)!;
+                          : Theme
+                          .of(context)
+                          .iconTheme
+                          .color)!;
                       print(_eyeColor);
                       print("2222");
                     });
                   },
-                ))));
-  }
-
-  Widget buildnameTextField() {
-    return Container(
-        height: 45.h,
-        width: 321.w,
-        margin: EdgeInsets.only(left: 25.w, top: 0.h, right: 33.w),
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        child: TextFormField(
-          decoration: InputDecoration(
-            hintText: 'Username',
-            hintStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 16.sp
-            ),
-            border: InputBorder.none,
-
-          ),
-          validator: (v) {
-            var nameReg = RegExp(r"^[a-zA-Z0-9]+$");
-            if (!nameReg.hasMatch(v!)) {
-              return '只能输入字母和数字';
-            }
-            return "test";
-          },
-          onChanged: (value) => username = value,
-          style: TextStyle(color: Colors.white),
-        ));
-  }
-
-  Widget getImage(String imageUrl) {
-    return Image.asset(imageUrl);
-  }
-
-
-  Future<void> registerUser() async {
-    //var url = Uri.parse('http://8.130.41.221:8080/users/reg');
-    //var body = {'username': username, 'password': password};
-    Map<String,dynamic> map = Map();
-    map['username'] = username; map['password'] = password;
-    String dio_url = 'http://8.130.41.221:8080/users/reg?username=${username}/password=${password}';
-    Dio dio = Dio();
-    var response = await dio.post(dio_url,data: map);
-    print(response.data);
-    /*
-    http.post(url, headers: body).then((response) {
-      print('服务器响应: ${response.statusCode}');
-      if (response.statusCode == 200) {
-
-        print('Successful registration');
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MyHomePage(token: "login-page",uid: ,),
-          ),
-        );
-      }
-      else {
-        print('Failed to register user');
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(content: Text("注册失败，要不再试试？"),);
-          },
-        );
-      }
-    }*/
-
-  }
+                ))));*/
 }
