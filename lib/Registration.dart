@@ -1,7 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:persist/loginpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'mainPage/homepage.dart';
+import 'models/user.dart';
 
 class User {
   final String username;
@@ -32,13 +36,14 @@ class RegistretionPage extends StatefulWidget {
 
 class _RegistretionPageState extends State<RegistretionPage> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController name =TextEditingController();
-  TextEditingController Email =TextEditingController();
-  TextEditingController password =TextEditingController();
-  TextEditingController Confirmpassword =TextEditingController();
+  String name="";
+  String Email="";
+  String password="";
+  String Confirmpassword="";
   bool _isObscure1 = true;
   bool _isObscure2 = true;
-  Color _eyeColor = Color.fromRGBO(73, 108, 251, 1);
+  Color _eyeColor1 = Color.fromRGBO(73, 108, 251, 1);
+  Color _eyeColor2 = Color.fromRGBO(73, 108, 251, 1);
 
   @override
   Widget build(BuildContext context) {
@@ -210,8 +215,7 @@ class _RegistretionPageState extends State<RegistretionPage> {
           borderRadius: BorderRadius.circular(10),
         ),
         alignment: Alignment.centerLeft,
-        child: TextFormField(
-          controller: name,
+        child: TextField(
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: 10, bottom: 4),
             hintText: 'Your username',
@@ -221,11 +225,10 @@ class _RegistretionPageState extends State<RegistretionPage> {
           style: TextStyle(
             color: Colors.white,
           ),
-          validator: (v) {
-            return v!.trim().isNotEmpty ? null : "用户名不能为空";
-          },
+          onChanged: (value) => name = value,
+        )
 
-        ));
+    );
 
     /* Container(
         height: 45.h,
@@ -268,16 +271,20 @@ class _RegistretionPageState extends State<RegistretionPage> {
       ),
       child: Center(
         child: TextFormField(
-          controller: Email,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: 10, bottom: 4),
             hintText: 'Your email address',
             hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
             border: InputBorder.none,
           ),
-          validator: (v) {
-            return v!.trim().length > 5 ? null : "密码不能少于6位";
-          },
+            validator: (v) {
+              var emailReg = RegExp(
+                  r"[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?");
+              if (!emailReg.hasMatch(v!)) {
+                return '请输入正确的邮箱地址';
+              }
+            },
+          onChanged: (v)=> Email=v!,
           style: TextStyle(
             color: Colors.white,
           ),
@@ -301,11 +308,12 @@ class _RegistretionPageState extends State<RegistretionPage> {
               contentPadding: EdgeInsets.only(left: 10, top: 8),
               hintText: 'Must be more than 8 characters',
               hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
+
               border: InputBorder.none,
               suffixIcon: IconButton(
                 icon: Icon(
                   Icons.remove_red_eye,
-                  color: _eyeColor,
+                  color: _eyeColor1,
                 ),
                 onPressed: () {
                   print("1111");
@@ -313,10 +321,10 @@ class _RegistretionPageState extends State<RegistretionPage> {
                     _isObscure1 = !_isObscure1;
                     print(_isObscure1);
 
-                    _eyeColor = (_isObscure1
+                    _eyeColor1 = (_isObscure1
                         ? Color.fromRGBO(73, 108, 251, 1)
                         : Theme.of(context).iconTheme.color)!;
-                    print(_eyeColor);
+                    print(_eyeColor1);
                     print("2222");
                   });
                 },
@@ -324,6 +332,7 @@ class _RegistretionPageState extends State<RegistretionPage> {
           style: TextStyle(
             color: Colors.white,
           ),
+          onChanged: (value)=>password=value ,
         ),
       ),
     );
@@ -348,7 +357,7 @@ class _RegistretionPageState extends State<RegistretionPage> {
               suffixIcon: IconButton(
                 icon: Icon(
                   Icons.remove_red_eye,
-                  color: _eyeColor,
+                  color: _eyeColor2,
                 ),
                 onPressed: () {
                   // 修改 state 内部变量, 且需要界面内容更新, 需要使用 setState()
@@ -356,10 +365,10 @@ class _RegistretionPageState extends State<RegistretionPage> {
                     _isObscure2 = !_isObscure2;
                     print(_isObscure2);
                     print("1111");
-                    _eyeColor = (_isObscure2
+                    _eyeColor2 = (_isObscure2
                         ? Color.fromRGBO(73, 108, 251, 1)
                         : Theme.of(context).iconTheme.color)!;
-                    print(_eyeColor);
+                    print(_eyeColor2);
                     print("2222");
                   });
                 },
@@ -367,6 +376,7 @@ class _RegistretionPageState extends State<RegistretionPage> {
           style: TextStyle(
             color: Colors.white,
           ),
+          onChanged: (value)=>Confirmpassword=value,
         ),
       ),
     );
@@ -428,7 +438,7 @@ class _RegistretionPageState extends State<RegistretionPage> {
         ),
         child: Center(
           child: Text(
-            'Registretion',
+            'Register',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -437,11 +447,45 @@ class _RegistretionPageState extends State<RegistretionPage> {
         ),
       ),
       onTap: () {
+        print(name);
+        print(Email);
+        print(password);
+        print(Confirmpassword);
+        register();
         //registerUser();
       },
     );
   }
 
+  Future<void> register() async {
+    String dioUrl =
+        'http://8.130.41.221:8081/users/login?username=${name}&Email=${Email}&password=${password}&confirmpassword${Confirmpassword}';
+    print(dioUrl);
+    Dio dio = Dio();
+    var response = await dio.post(dioUrl);
+    print(response.data);
+    if (response.statusCode == 200) {
+      // 解析登录接口的返回数据
+      //var data = json.decode(await response.stream.bytesToString());
+      var data = Data.fromJson(response.data["data"]);
+      int uid = data.uid;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MyHomePage(token: "login-page", uid: uid),
+        ),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text("密码错误噢"),
+          );
+        },
+      );
+    }
+  }
   Widget buildLogininText(context) {
     return Center(
       child: Row(
