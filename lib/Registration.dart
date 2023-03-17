@@ -284,7 +284,7 @@ class _RegistretionPageState extends State<RegistretionPage> {
                 return '请输入正确的邮箱地址';
               }
             },
-          onChanged: (v)=> Email=v!,
+          onChanged: (v)=> Email=v,
           style: TextStyle(
             color: Colors.white,
           ),
@@ -451,7 +451,18 @@ class _RegistretionPageState extends State<RegistretionPage> {
         print(Email);
         print(password);
         print(Confirmpassword);
-        register();
+        if(password==Confirmpassword){
+          register();
+        }
+        else {
+          showDialog(
+              context: context,
+              builder: (BuildContext context){
+            return AlertDialog(
+              content:Text("两次密码不一致喵！")
+            );
+          });
+        }
         //registerUser();
       },
     );
@@ -459,28 +470,39 @@ class _RegistretionPageState extends State<RegistretionPage> {
 
   Future<void> register() async {
     String dioUrl =
-        'http://8.130.41.221:8081/users/login?username=${name}&Email=${Email}&password=${password}&confirmpassword${Confirmpassword}';
+        'http://8.130.41.221:8081/users/reg?username=${name}&Email=${Email}&password=${password}&confirmpassword=${Confirmpassword}';
     print(dioUrl);
+
     Dio dio = Dio();
     var response = await dio.post(dioUrl);
-    print(response.data);
-    if (response.statusCode == 200) {
+    print(response);
+    print(response.data["state"]);
+    print(response.data["uid"]);
+    var state = response.data["state"];
+    if (state == 200) {
       // 解析登录接口的返回数据
-      //var data = json.decode(await response.stream.bytesToString());
-      var data = Data.fromJson(response.data["data"]);
-      int uid = data.uid;
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MyHomePage(token: "login-page", uid: uid),
+          builder: (context) => MyHomePage(token: "login-page", uid: response.data["uid"]),
         ),
       );
-    } else {
+    } else if(state==4000) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            content: Text("密码错误噢"),
+            content: Text("QAQ用户名已被占用了喵~"),
+          );
+        },
+      );
+    }
+    else{
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text("账号or邮箱or密码有问题！"),
           );
         },
       );

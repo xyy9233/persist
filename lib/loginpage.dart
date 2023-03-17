@@ -235,12 +235,6 @@ class _LoginPageState extends State<LoginPage> {
             obscureText: _isObscure,
             // 是否显示文字
             onSaved: (v) => password = v!,
-            validator: (v) {
-              if (v!.isEmpty) {
-                return '请输入密码';
-              }
-              return '123';
-            },
             onChanged: (value) => password = value,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
@@ -255,13 +249,9 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     setState(() {
                       _isObscure = !_isObscure;
-                      print(_isObscure);
-                      print("1111");
                       _eyeColor = (_isObscure
                           ? Color.fromRGBO(73, 108, 251, 1)
                           : Theme.of(context).iconTheme.color)!;
-                      print(_eyeColor);
-                      print("2222");
                     });
                   },
                 ))));
@@ -282,13 +272,6 @@ class _LoginPageState extends State<LoginPage> {
             hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
             border: InputBorder.none,
           ),
-          validator: (v) {
-            var nameReg = RegExp(r"^[a-zA-Z0-9]+$");
-            if (!nameReg.hasMatch(v!)) {
-              return '只能输入字母和数字';
-            }
-            return "test";
-          },
           onChanged: (value) => username = value,
           style: TextStyle(color: Colors.white),
         ));
