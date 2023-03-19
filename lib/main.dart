@@ -13,11 +13,12 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(393, 852),
-
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
@@ -34,8 +35,8 @@ class MyApp extends StatelessWidget {
               ),
             ],
             child: MaterialApp(
-                home: //MyHomePage(token: 'HomePage',uid: 12,)
-                RegistretionPage(key:ValueKey('Registration'), title: '注册',)
+                home: MyHomePage(key: ValueKey("主页面"), uid: 12,username: "test",)
+                //RegistretionPage(key:ValueKey('Registration'), title: '注册',)
               //LoginPage(key:ValueKey('Registration'), title: '登录',)
             ),
           );

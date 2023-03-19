@@ -296,10 +296,10 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MyHomePage(token: "login-page", uid: uid),
+          builder: (context) => MyHomePage(key:Key("登录"),uid:response.data["uid"],username:username),
         ),
       );
-    } else {
+    } else if(response.statusCode == 5002){
       showDialog(
         context: context,
         builder: (BuildContext context) {

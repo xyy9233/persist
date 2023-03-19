@@ -484,7 +484,7 @@ class _RegistretionPageState extends State<RegistretionPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MyHomePage(token: "login-page", uid: response.data["uid"]),
+          builder: (context) => MyHomePage(key:Key("注册"),uid:response.data["uid"],username: name),
         ),
       );
     } else if(state==4000) {

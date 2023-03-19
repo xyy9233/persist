@@ -5,42 +5,33 @@ import 'package:persist/mainPage/page3.dart';
 import 'package:persist/mainPage/page4.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:convert';
+import 'package:persist/Registration.dart';
 import 'package:http/http.dart' as http;
 import '../change.dart';
 import 'change.dart';
 
 class MyHomePage extends StatefulWidget {
-  late final String token;
-  late final String uid;
-  MyHomePage({required this.token, required int uid});
-
+  MyHomePage({required Key key, required this.uid, required this.username}) : super(key: key);
+  final int uid;
+  final String username;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
-
-/*
-  Future<Habits> getData() async {
-    final response = await http.get(('http://8.130.41.221:8081/habit/userAllHabit?username=%22' + uid + '%22') as Uri);
-    if (response.statusCode == 200) {
-      return Habits();
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }*/
-
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
   int _selectedIndex = 0;
-  final _pageOptions = [
-
-    Page1(),
-    Page2(),
-    Page3(),
-    Page4(),
-  ];
+  late final List<Widget> _pageOptions;
+  @override
+  void initState(){
+    super.initState();
+    _pageOptions=[
+      Page1(key: Key("注册"), uid: widget.uid,username:widget.username),
+      Page2(),
+      Page3(),
+      Page4(),
+    ];
+  }
 
 
 
