@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Page3 extends StatelessWidget {
+  Page3({required Key key,required this.uid}):super(key:key);
+  final int uid;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,14 +15,52 @@ class Page3 extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: ListView(children: [
-          const SizedBox(height: 80),
-          Container(
-            width: 154,
-            height: 200,
-            child: getImage("assets/jutiechengjiutianshu.png"),
-          ),
-        ]),
+        child: Stack(
+          children: [
+            Positioned(
+              left: 28.0.w,
+              top: 142.0.h,
+              child: Container(
+                width: 154.w,
+                height: 200.h,
+                child: getImage("assets/chengjiu1.png"),
+              ),
+            ),
+            Positioned(
+              left: 211.0.w,
+              top: 142.0.h,
+              child: Container(
+                width: 154.w,
+                height: 200.h,
+                child: getImage(
+                    "assets/chengjiu2.png"
+                ),
+              ),
+            ),
+            Positioned(
+              left: 28.0.w,
+              top: 366.0.h,
+              child: Container(
+                width: 154.w,
+                height: 200.h,
+                child: getImage(
+                    "assets/chengjiu3no.png"
+                ),
+              ),
+            ),
+            Positioned(
+              left: 211.0.w,
+              top: 366.0.h,
+              child: Container(
+                width: 154.w,
+                height: 200.h,
+                child: getImage(
+                    "assets/chengjiu4no.png"
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

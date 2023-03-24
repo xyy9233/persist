@@ -27,9 +27,9 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _pageOptions=[
       Page1(key: Key("注册"), uid: widget.uid,username:widget.username),
-      Page2(),
-      Page3(),
-      Page4(),
+      Page2(key: Key("注册"), uid: widget.uid,),
+      Page3(key: Key("注册"), uid: widget.uid,),
+      Page4(key: Key("注册"), uid: widget.uid,),
     ];
   }
 
@@ -113,10 +113,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-
-
-
-
-
 

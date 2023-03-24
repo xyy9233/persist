@@ -8,18 +8,12 @@ import 'package:persist/models/habit.dart';
 
 
 class Page1 extends StatefulWidget {
-   Page1({required Key key,required this.uid, required this.username}):super(key:key);
-   final int uid;
-   final String username;
+  Page1({required Key key,required this.uid, required this.username}):super(key:key);
+  final int uid;
+  final String username;
 
 
-  /* Future<void>character()async{
-     String dioUrl="http://8.130.41.221:8081/habit/userAllHabit?uid=${uid}";
-     Dio dio = Dio();
-     var response = await dio.post(dioUrl);
-   }*/
-
-   @override
+  @override
   _Page1State createState() => _Page1State();
 }
 
@@ -34,152 +28,279 @@ class _Page1State extends State<Page1> {
     Dio dio = Dio(
     )..interceptors.add(LogInterceptor(responseBody: true));
     var response = await dio.get(dioUrl);
-    print(response.data);
+    //print(response.data);
     habit = Habit.fromJson(response.data);
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: getData(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if(snapshot.connectionState == ConnectionState.done){
-          if(snapshot.hasData){
-            return Scaffold(
-                body: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/page1.png"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  child: Stack(children: [
-                    Positioned(
-                      left: 12.0.w,
-                      top: 25.0.h,
-                      child: Container(
-                        width: 393.w,
-                        height: 88.h,
-                        child: buildHiname(),
-                      ),
-                    ),
-                    Positioned(
-                      left: 13.0.w,
-                      top: 104.0.h,
-                      child: Container(
-                        width: 393.w,
-                        height: 31.h,
-                        child: buildguli(),
-                      ),
-                    ),
-                    Positioned(
-                      left: 329.0.w,
-                      top: 56.0.h,
-                      child: Container(
-                        width: 40.w,
-                        height: 40.h,
-                        child: buildavatar(),
-                      ),
-                    ),
-                    Positioned(
-                      left: 320.0.w,
-                      top: 47.0.h,
-                      child: Container(
-                        width: 57.w,
-                        height: 56.h,
-                        child: getImage("assets/avatarkuang.png"),
-                      ),
-                    ),
-                    Positioned(
-                      left: 0.0.w,
-                      top: 158.0.h,
-                      child: Container(
-                        width: 290.w,
-                        height: 30.h,
-                        child: buildDatenow(),
-                      ),
-                    ),
-                    Positioned(
-                      left: 300.0.w,
-                      top: 160.0.h,
-                      child: Container(
-                        width: 86.w,
-                        height: 30.h,
-                        child: Text("2023",
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: Color.fromRGBO(134, 159, 249, 1),
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ),
-                    ),
-                    Positioned(
-                      left: 15.0.w,
-                      top: 134.0.h,
-                      child: Container(
-                        width: 378.w,
-                        height: 167.h,
-                        child: buildDatekuang(),
-                      ),
-                    ),
-                    Positioned(
-                      left: 27.0.w,
-                      top: 193.0.h,
-                      child: Container(
-                        width: 324.w,
-                        height: 96.h,
-                        child: buildDate(),
-                      ),
-                    ),
-                    Positioned(
-                      left: 12.0.w,
-                      top: 303.0.h,
-                      child: Container(
-                        width: 303.w,
-                        height: 65.h,
-                        child: buildtask(),
-                      ),
-                    ),
-                    Positioned(
-                      left: 332.0.w,
-                      top: 320.0.h,
-                      child: Container(
-                        width: 45.w,
-                        height: 45.h,
-                        child: buildAdd(),
-                      ),
-                    ),
-                    Positioned(
-                      left: 16.0.w,
-                      top: 369.0.h,
-                      child: Container(
-                        width: 361.w,
-                        height: 632.h,
-                        child: buildDailyPlan(),
-                      ),
-                    ),
-                  ]),
-                ));
-          }
-          else return CircularProgressIndicator();
-        } else return CircularProgressIndicator();
 
+      builder: (BuildContext context, AsyncSnapshot asyncSnapshot) {
+        switch (asyncSnapshot.connectionState) {
+          case ConnectionState.none:
+            return Text('none');
+          case ConnectionState.waiting:
+            return Center(child: CircularProgressIndicator());
+          case ConnectionState.active:
+            return Center(child: CircularProgressIndicator());
+          case ConnectionState.done:
+            if (asyncSnapshot.hasError)
+              return Scaffold(
+                  body: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/page1.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Stack(children: [
+                      Positioned(
+                        left: 12.0.w,
+                        top: 25.0.h,
+                        child: Container(
+                          width: 393.w,
+                          height: 88.h,
+                          child: buildHiname(),
+                        ),
+                      ),
+                      Positioned(
+                        left: 13.0.w,
+                        top: 104.0.h,
+                        child: Container(
+                          width: 393.w,
+                          height: 31.h,
+                          child: buildguli(),
+                        ),
+                      ),
+                      Positioned(
+                        left: 329.0.w,
+                        top: 56.0.h,
+                        child: Container(
+                          width: 40.w,
+                          height: 40.h,
+                          child: buildavatar(),
+                        ),
+                      ),
+                      Positioned(
+                        left: 320.0.w,
+                        top: 47.0.h,
+                        child: Container(
+                          width: 57.w,
+                          height: 56.h,
+                          child: getImage("assets/avatarkuang.png"),
+                        ),
+                      ),
+                      Positioned(
+                        left: 0.0.w,
+                        top: 158.0.h,
+                        child: Container(
+                          width: 290.w,
+                          height: 30.h,
+                          child: buildDatenow(),
+                        ),
+                      ),
+                      Positioned(
+                        left: 300.0.w,
+                        top: 160.0.h,
+                        child: Container(
+                          width: 86.w,
+                          height: 30.h,
+                          child: Text("2023",
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Color.fromRGBO(134, 159, 249, 1),
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ),
+                      ),
+                      Positioned(
+                        left: 15.0.w,
+                        top: 134.0.h,
+                        child: Container(
+                          width: 378.w,
+                          height: 167.h,
+                          child: buildDatekuang(),
+                        ),
+                      ),
+                      Positioned(
+                        left: 27.0.w,
+                        top: 193.0.h,
+                        child: Container(
+                          width: 324.w,
+                          height: 96.h,
+                          child: buildDate(),
+                        ),
+                      ),
+                      Positioned(
+                        left: 12.0.w,
+                        top: 303.0.h,
+                        child: Container(
+                          width: 303.w,
+                          height: 65.h,
+                          child: buildtask(),
+                        ),
+                      ),
+                      Positioned(
+                        left: 332.0.w,
+                        top: 320.0.h,
+                        child: Container(
+                          width: 45.w,
+                          height: 45.h,
+                          child: buildAdd(context),
+                        ),
+                      ),
+                      Positioned(
+                        left: 16.0.w,
+                        top: 369.0.h,
+                        child: Container(
+                          width: 361.w,
+                          height: 420.h,
+                          child: Container(
 
-      }
+                            child:Text("\n\n\n\n  还没有习惯噢，\n  快点击加号建立第一个习惯吧！",
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Color.fromRGBO(73, 108, 251, 1),
+                                fontWeight: FontWeight.bold,
+                              )
+                          ),)
+                        ),
+                      ),
+                    ]),
+                  ));
+            else
+              return Scaffold(
+                  body: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/page1.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Stack(children: [
+                      Positioned(
+                        left: 12.0.w,
+                        top: 25.0.h,
+                        child: Container(
+                          width: 393.w,
+                          height: 88.h,
+                          child: buildHiname(),
+                        ),
+                      ),
+                      Positioned(
+                        left: 13.0.w,
+                        top: 104.0.h,
+                        child: Container(
+                          width: 393.w,
+                          height: 31.h,
+                          child: buildguli(),
+                        ),
+                      ),
+                      Positioned(
+                        left: 329.0.w,
+                        top: 56.0.h,
+                        child: Container(
+                          width: 40.w,
+                          height: 40.h,
+                          child: buildavatar(),
+                        ),
+                      ),
+                      Positioned(
+                        left: 320.0.w,
+                        top: 47.0.h,
+                        child: Container(
+                          width: 57.w,
+                          height: 56.h,
+                          child: getImage("assets/avatarkuang.png"),
+                        ),
+                      ),
+                      Positioned(
+                        left: 0.0.w,
+                        top: 158.0.h,
+                        child: Container(
+                          width: 290.w,
+                          height: 30.h,
+                          child: buildDatenow(),
+                        ),
+                      ),
+                      Positioned(
+                        left: 300.0.w,
+                        top: 160.0.h,
+                        child: Container(
+                          width: 86.w,
+                          height: 30.h,
+                          child: Text("2023",
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Color.fromRGBO(134, 159, 249, 1),
+                                fontWeight: FontWeight.bold,
+                              )
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 15.0.w,
+                        top: 134.0.h,
+                        child: Container(
+                          width: 378.w,
+                          height: 167.h,
+                          child: buildDatekuang(),
+                        ),
+                      ),
+                      Positioned(
+                        left: 27.0.w,
+                        top: 193.0.h,
+                        child: Container(
+                          width: 324.w,
+                          height: 96.h,
+                          child: buildDate(),
+                        ),
+                      ),
+                      Positioned(
+                        left: 12.0.w,
+                        top: 303.0.h,
+                        child: Container(
+                          width: 303.w,
+                          height: 65.h,
+                          child: buildtask(),
+                        ),
+                      ),
+                      Positioned(
+                        left: 332.0.w,
+                        top: 320.0.h,
+                        child: Container(
+                          width: 45.w,
+                          height: 45.h,
+                          child: buildAdd(context),
+                        ),
+                      ),
+                      Positioned(
+                        left: 16.0.w,
+                        top: 369.0.h,
+                        child: Container(
+                          width: 361.w,
+                          height: 420.h,
+                          child: buildDailyPlan(),
+                        ),
+                      ),
+                    ]),
+                  ));
+        }
+      },
     );
   }
+
+
 
   Widget buildHiname() {
     return Container(
       child: Text(
-        'Hi,${widget.username}',
+        '你好,${widget.username}',
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 64.0,
+          fontSize: 44.0,
           color: Color.fromRGBO(73, 108, 251, 1),
         ),
       ),
@@ -189,7 +310,7 @@ class _Page1State extends State<Page1> {
   Widget buildguli() {
     return Container(
       child: Text(
-        'Where there is a will, there is a way.喵',
+        '有志者事竟成.喵',
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 16.0,
@@ -220,14 +341,14 @@ class _Page1State extends State<Page1> {
   Widget buildDatenow() {
     return Container(
       child: Text(
-                    DateFormat.MMMM().format(DateTime.now()),
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Color.fromRGBO(134, 159, 249, 1),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+        DateFormat.MMMM().format(DateTime.now()),
+        textAlign: TextAlign.right,
+        style: TextStyle(
+          fontSize: 24,
+          color: Color.fromRGBO(134, 159, 249, 1),
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 
@@ -303,10 +424,10 @@ class _Page1State extends State<Page1> {
   Widget buildtask() {
     return Container(
       child: Text(
-        'Task Today',
+        '今日任务',
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 48.0,
+          fontSize: 36.0,
           color: Color.fromRGBO(73, 108, 251, 1),
         ),
       ),
@@ -314,83 +435,133 @@ class _Page1State extends State<Page1> {
   }
 
 
-
+  bool _showOverlay = false;
   Widget buildDailyPlan() {
     return Container(
-          width: 393.w,
-          height: 700.h,
-          child: ListView.builder(
-           itemBuilder: (BuildContext context, int index) {
-              return Container(
-                margin: EdgeInsets.only(bottom: 0),
-                height: 180.h,
-                child: Row(
-                  children: <Widget>[
-                    index % 2 == 0
-                        ? Expanded(
-                        child: Text(
-                          habit.data[index].name,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22.0,
-                          ),
-                        )
+      child: ListView.builder(
+        itemCount: habit.data.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            margin: EdgeInsets.only(bottom: 0),
+            height: 180.h,
+            child: Row(
+              children: <Widget>[
+                index % 2 == 0
+                    ? Expanded(
+                    child: Text(
+                      habit.data[index].name=="jutie00000"?"举铁":"乒乓",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 22.0,
+                      ),
                     )
-                        : SizedBox(),
-                    CircleAvatar(
-                      radius: 100.r,
-                      backgroundColor: Colors.transparent,
-                      child: Container(
-                        padding: EdgeInsets.all(0),
+                )
+                    : SizedBox(),
+                GestureDetector(
+                  onLongPressStart: (_) {
+                    setState(() {
+                      _showOverlay = true; // 长按开始，显示覆盖图片
+                    });
+                  },
+                  onLongPressEnd: (_) {
+                    setState(() {
+                      _showOverlay = false; // 长按结束，隐藏覆盖图片
+                    });
+                  },
+                  child: Stack(
+                    children: [
+                      CircleAvatar(
+                        radius: 100.r,
+                        backgroundColor: Colors.transparent,
                         child: Container(
-                          decoration: BoxDecoration(
-                           // image: DecorationImage(
-                           //   image: AssetImage("assets/${response.data.0.name}.png"),
-                            //),
-                            border: Border.all(
-                              color: Color.fromRGBO(73, 108, 251, 1),
-                              width: 5.0.w,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Color.fromRGBO(73, 108, 251, 1),
+                                width: 5.0.w,
+                              ),
+                              shape: BoxShape.circle,
                             ),
-                            shape: BoxShape.circle,
+                            child: Padding(
+                              padding: EdgeInsets.all(15),
+                              child: Image.asset(
+                                "assets/${habit.data[index].icon}.png",
+                                scale: 0.1,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    index % 2 == 1
-                        ? Expanded(
-                        child: Text(
-                          habit.data[index].name,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22.0,
+                      // 使用AnimatedContainer在圆环闭合时缩放并显示habitok.png图片
+                      if (_showOverlay)
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white.withOpacity(0.5),
                           ),
-                        ))
-                        : SizedBox(),
-                  ],
+                          width: 200.r,
+                          height: 200.r,
+                          child: Center(
+                            child: Image.asset(
+                              "assets/wancheng.png",
+                              width: 220.r,
+                              height: 220.r,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
-              );
-            },
-          ),
-        );
-      }
+
+                index % 2 == 1
+                    ? Expanded(
+                    child: Text(
+                      habit.data[index].name=="jutie00000"?"举铁":"乒乓",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 22.0,
+                      ),
+                    ))
+                    : SizedBox(),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
 
 
-  bool isVisible = false;
 
-  Widget buildAdd() {
+
+  Widget buildAdd(context) {
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(
           context: context,
+          isScrollControlled: true,
           builder: (BuildContext context) {
-            return SingleChildScrollView(
-                child: AddPage());
+            return Container(
+              height: 542.h,
+               decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/addpage.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: SingleChildScrollView(
+                child: AddPage(),
+              ),
+            );
           },
         );
       },
       child: Container(
+        height: 700.h,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/addquan.png"),
@@ -401,31 +572,125 @@ class _Page1State extends State<Page1> {
     );
   }
 
-
-
   Widget AddPage() {
-    return Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/page2.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Stack(
-            children: [
+    String habitName = '';
+    String habitDays = '';
+    String habitMotto = '';
+    String selectedOption = '';
+    List<String> options = [
+      'option1',
+      'option2',
+      'option3',
+      'option4',
+      'option5',
+      'option6'
+    ];
+    return Scaffold(
+        body: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/addpage.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Stack(children: [
               Positioned(
-                left: 16.0.w,
-                top: 416.0.h,
+                left: 016.0.w,
+                top: 20.0.h,
                 child: Container(
                   width: 168.w,
                   height: 48.h,
-                  child: Text("hhi"),
+                  child: TextField(
+                    decoration: InputDecoration(labelText: '名称'),
+                    onChanged: (value) {
+                      setState(() {
+                        habitName = value;
+                      });
+                    },
+                  ),
                 ),
-              )
-            ]
-        )
-    );
+              ),
+              Positioned(
+                left: 016.0.w,
+                top: 20.0.h,
+                child: Container(
+                  width: 168.w,
+                  height: 48.h,
+                  child: TextField(
+                    decoration: InputDecoration(labelText: '天数'),
+                    onChanged: (value) {
+                      setState(() {
+                        habitDays = value;
+                      });
+                    },
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 016.0.w,
+                top: 20.0.h,
+                child: Container(
+                  width: 168.w,
+                  height: 48.h,
+                  child: TextField(
+                    decoration: InputDecoration(labelText: 'Motto'),
+                    onChanged: (value) {
+                      setState(() {
+                        habitMotto = value;
+                      });
+                    },
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 016.0.w,
+                top: 20.0.h,
+                child: Container(
+                  width: 168.w,
+                  height: 48.h,
+                  child: Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: options.map((option) {
+                      bool isSelected = selectedOption == option;
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedOption = option;
+                          });
+                        },
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: isSelected ? Colors.blue : Colors.grey),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Image.asset(
+                            'assets/$option.png',
+                            width: 10,
+                            height: 10,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+              Positioned(
+                  left: 016.0.w,
+                  top: 20.0.h,
+                  child: Container(
+                      width: 168.w,
+                      height: 48.h,
+                      child: ElevatedButton(
+                        onPressed: _onPressed,
+                        child: Text('添加'),
+                      )))
+            ])));
   }
+
 
 //手势检测
 /*class _GestureTestState extends State<GestureTest> {
@@ -462,3 +727,14 @@ class _Page1State extends State<Page1> {
   }
 }
 
+
+Future<void> _onPressed() async {
+  print("##");
+  String dioUrl = "http://8.130.41.221:8081/habit/userAllHabit?uid=12";
+  print(dioUrl);
+  Dio dio = Dio()..interceptors.add(LogInterceptor(responseBody: true));
+  var response = await dio.get(dioUrl);
+  //print(response.data);
+  //habit = Habit.fromJson(response.data);
+  //state = Habit.fromJson(response.data["state"]) as int;
+}

@@ -13,26 +13,22 @@ class Habit {
     required this.state,
     required this.message,
     required this.data,
-    required this.uid,
   });
 
   int state;
   String message;
   List<Datum> data;
-  int uid;
 
   factory Habit.fromJson(Map<String, dynamic> json) => Habit(
     state: json["state"],
     message: json["message"],
     data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-    uid: json["uid"],
   );
 
   Map<String, dynamic> toJson() => {
     "state": state,
     "message": message,
     "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    "uid": uid,
   };
 }
 

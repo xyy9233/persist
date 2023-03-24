@@ -136,10 +136,11 @@ class _LoginPageState extends State<LoginPage> {
             Positioned(
               left: 42.0.w,
               top: 627.0.h,
-              child: Text("Remember  me",
+              child: Text("保存密码",
                   style: TextStyle(
+                    fontSize: 12.sp,
                     color: Color.fromRGBO(135, 135, 135, 1),
-                    //fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.bold,
                   )),
             ),
             Positioned(
@@ -164,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         child: Center(
           child: Text(
-            'Log in',
+            '登      录 ',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -183,11 +184,11 @@ class _LoginPageState extends State<LoginPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Have not an account yet?',
+          Text('                 没有账号？',
               style: TextStyle(
                   color: Color.fromRGBO(109, 109, 109, 1), fontSize: 8.sp)),
           GestureDetector(
-              child: Text('Registration',
+              child: Text('长按注册',
                   style: TextStyle(
                       color: Color.fromRGBO(35, 36, 79, 1), fontSize: 8.sp)),
               onLongPress: () {
@@ -222,9 +223,12 @@ class _LoginPageState extends State<LoginPage> {
             },
           );
         },
-        child: Text("Forget password?",
+        child: Text("忘记密码？",
             style: TextStyle(
-                fontSize: 12.sp, color: Color.fromRGBO(135, 135, 135, 1))),
+                fontSize: 12.sp,
+              color: Color.fromRGBO(135, 135, 135, 1),
+              fontWeight: FontWeight.bold,)
+        ),
       ),
     );
   }
@@ -238,12 +242,12 @@ class _LoginPageState extends State<LoginPage> {
             onChanged: (value) => password = value,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
-                hintText: 'Password',
+                hintText: '密码',
                 hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
                 border: InputBorder.none,
                 suffixIcon: IconButton(
                   icon: Icon(
-                    Icons.remove_red_eye,
+                    _isObscure?Icons.visibility_off:Icons.remove_red_eye,
                     color: _eyeColor,
                   ),
                   onPressed: () {
@@ -251,7 +255,7 @@ class _LoginPageState extends State<LoginPage> {
                       _isObscure = !_isObscure;
                       _eyeColor = (_isObscure
                           ? Color.fromRGBO(73, 108, 251, 1)
-                          : Theme.of(context).iconTheme.color)!;
+                          : Color.fromRGBO(73, 108, 251, 1));
                     });
                   },
                 ))));
@@ -267,8 +271,9 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         child: TextFormField(
+          keyboardType: TextInputType.text,
           decoration: InputDecoration(
-            hintText: 'Username',
+            hintText: '用户名',
             hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
             border: InputBorder.none,
           ),
@@ -287,16 +292,16 @@ class _LoginPageState extends State<LoginPage> {
     print(dioUrl);
     Dio dio = Dio();
     var response = await dio.post(dioUrl);
+    print(response.data["data"]["uid"]);
     print(response.data);
     if (response.statusCode == 200) {
       // 解析登录接口的返回数据
       //var data = json.decode(await response.stream.bytesToString());
       var data = Data.fromJson(response.data["data"]);
-      int uid = data.uid;
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MyHomePage(key:Key("登录"),uid:response.data["uid"],username:username),
+          builder: (context) => MyHomePage(key:Key("登录"),uid:response.data["data"]["uid"],username:username),
         ),
       );
     } else if(response.statusCode == 5002){

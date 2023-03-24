@@ -45,6 +45,8 @@ class _RegistretionPageState extends State<RegistretionPage> {
   Color _eyeColor1 = Color.fromRGBO(73, 108, 251, 1);
   Color _eyeColor2 = Color.fromRGBO(73, 108, 251, 1);
 
+  get image =>getImage("assets/lookno.png");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,13 +68,13 @@ class _RegistretionPageState extends State<RegistretionPage> {
             ///标题
             Positioned(
               left: 36.0.w,
-              top: 156.0.h,
+              top: 140.0.h,
               child: Container(
                   width: 241.w,
-                  height: 40.h,
-                  alignment: Alignment.center,
+                  height: 60.h,
+                  //alignment: Alignment.center,
                   child: Text(
-                    "Create account",
+                    "创建账号",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 32.0,
@@ -87,11 +89,11 @@ class _RegistretionPageState extends State<RegistretionPage> {
               child: Container(
                   width: 88.w,
                   height: 20.h,
-                  alignment: Alignment.center,
+                  //alignment: Alignment.center,
                   child: Text(
-                    "Username",
+                    "用户名",
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 14.0,
                     ),
                   )),
             ),
@@ -108,15 +110,15 @@ class _RegistretionPageState extends State<RegistretionPage> {
             ///邮箱
             Positioned(
               left: 36.0.w,
-              top: 312.0.h,
+              top: 308.0.h,
               child: Container(
                   width: 50.w,
                   height: 20.h,
-                  alignment: Alignment.center,
+                  //alignment: Alignment.center,
                   child: Text(
-                    "Email",
+                    "邮箱",
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 14.0,
                     ),
                   )),
             ),
@@ -138,9 +140,9 @@ class _RegistretionPageState extends State<RegistretionPage> {
                   height: 20.h,
                   alignment: Alignment.center,
                   child: Text(
-                    "Password",
+                    "密码",
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 14.0,
                     ),
                   )),
             ),
@@ -156,16 +158,16 @@ class _RegistretionPageState extends State<RegistretionPage> {
 
             ///确认密码
             Positioned(
-              left: 37.0.w,
-              top: 496.0.h,
+              left: 36.0.w,
+              top: 494.0.h,
               child: Container(
-                  width: 138.w,
-                  height: 20.h,
-                  alignment: Alignment.center,
+                  width: 64.w,
+                  height: 40.h,
+                  //alignment: Alignment.center,
                   child: Text(
-                    "Confirm Password",
+                    "确认密码",
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 14.0,
                     ),
                   )),
             ),
@@ -218,7 +220,7 @@ class _RegistretionPageState extends State<RegistretionPage> {
         child: TextField(
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: 10, bottom: 4),
-            hintText: 'Your username',
+            hintText: '您的用户名',
             hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
             border: InputBorder.none,
           ),
@@ -273,7 +275,7 @@ class _RegistretionPageState extends State<RegistretionPage> {
         child: TextFormField(
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: 10, bottom: 4),
-            hintText: 'Your email address',
+            hintText: '您的邮箱地址',
             hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
             border: InputBorder.none,
           ),
@@ -304,31 +306,28 @@ class _RegistretionPageState extends State<RegistretionPage> {
       ),
       child: Center(
         child: TextField(
+          obscureText: _isObscure1,
           decoration: InputDecoration(
               contentPadding: EdgeInsets.only(left: 10, top: 8),
-              hintText: 'Must be more than 8 characters',
+              hintText: '至少输入8位字符',
               hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
-
               border: InputBorder.none,
               suffixIcon: IconButton(
                 icon: Icon(
-                  Icons.remove_red_eye,
+                  _isObscure1?Icons.visibility_off:Icons.remove_red_eye,
                   color: _eyeColor1,
                 ),
                 onPressed: () {
-                  print("1111");
                   setState(() {
                     _isObscure1 = !_isObscure1;
-                    print(_isObscure1);
-
                     _eyeColor1 = (_isObscure1
                         ? Color.fromRGBO(73, 108, 251, 1)
-                        : Theme.of(context).iconTheme.color)!;
-                    print(_eyeColor1);
-                    print("2222");
+                        : Color.fromRGBO(73, 108, 251, 1)
+                    );
                   });
                 },
-              )),
+              )
+          ),
           style: TextStyle(
             color: Colors.white,
           ),
@@ -349,27 +348,24 @@ class _RegistretionPageState extends State<RegistretionPage> {
       ),
       child: Center(
         child: TextField(
+          obscureText: _isObscure2,
           decoration: InputDecoration(
               contentPadding: EdgeInsets.only(left: 10, top: 8),
-              hintText: 'Repeat password',
+              hintText: '重复您的密码',
               hintStyle: TextStyle(color: Colors.white, fontSize: 16.sp),
               border: InputBorder.none,
               suffixIcon: IconButton(
                 icon: Icon(
-                  Icons.remove_red_eye,
+                  _isObscure2?Icons.visibility_off:Icons.remove_red_eye,
                   color: _eyeColor2,
                 ),
                 onPressed: () {
-                  // 修改 state 内部变量, 且需要界面内容更新, 需要使用 setState()
                   setState(() {
                     _isObscure2 = !_isObscure2;
-                    print(_isObscure2);
-                    print("1111");
                     _eyeColor2 = (_isObscure2
                         ? Color.fromRGBO(73, 108, 251, 1)
-                        : Theme.of(context).iconTheme.color)!;
-                    print(_eyeColor2);
-                    print("2222");
+                        : Color.fromRGBO(73, 108, 251, 1)
+                    );
                   });
                 },
               )),
@@ -438,10 +434,11 @@ class _RegistretionPageState extends State<RegistretionPage> {
         ),
         child: Center(
           child: Text(
-            'Register',
+            '注      册',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
+              fontSize: 16,
             ),
           ),
         ),
@@ -476,17 +473,19 @@ class _RegistretionPageState extends State<RegistretionPage> {
     Dio dio = Dio();
     var response = await dio.post(dioUrl);
     print(response);
-    print(response.data["state"]);
-    print(response.data["uid"]);
+    //print(response.data["state"]);
+    print(response.data['data']["uid"]);
     var state = response.data["state"];
+    print(state);
     if (state == 200) {
       // 解析登录接口的返回数据
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MyHomePage(key:Key("注册"),uid:response.data["uid"],username: name),
+          builder: (context) => MyHomePage(key:Key("注册"),uid:response.data["data"]["uid"],username: name),
         ),
       );
+      print(response.data["data"]["uid"]);
     } else if(state==4000) {
       showDialog(
         context: context,
@@ -513,11 +512,11 @@ class _RegistretionPageState extends State<RegistretionPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Already have an account?',
+          Text('           已有账号？',
               style: TextStyle(
                   color: Color.fromRGBO(109, 109, 109, 1), fontSize: 8.sp)),
           GestureDetector(
-              child: Text('Sign in.',
+              child: Text('长按登录',
                   style: TextStyle(
                       color: Color.fromRGBO(35, 36, 79, 1), fontSize: 8.sp)),
               onLongPress: () {

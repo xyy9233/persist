@@ -96,14 +96,26 @@ flutter:
     - assets/3yes.png
     - assets/3no.png
     - assets/4no.png
-    - assets/jutieribiao.png
-    - assets/jutiezongbiao.png
-    - assets/zidingyizongbiao.png
-    - assets/pingpangzongbiao.png
-    - assets/pingpangribiao.png
-    - assets/yumaoqiuribiao.png
     - assets/registration.png
     - assets/4yes.png
+    - assets/page4.png
+    - assets/avatar.png
+    - assets/avatarsample.png
+    - assets/jutiechengjiu.png
+    - assets/pingpangchengjiu.png
+    - assets/zidingyichengjiu.png
+    - assets/chengjiu1.png
+    - assets/chengjiu2.png
+    - assets/chengjiu3.png
+    - assets/chengjiu4.png
+    - assets/lookno.png
+    - assets/jutie00000.png
+    - assets/pingpang00.png
+    - assets/yumaoqiu00.png
+    - assets/chengjiu3no.png
+    - assets/chengjiu4no.png
+    - assets/wancheng.png
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
