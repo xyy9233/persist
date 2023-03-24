@@ -329,7 +329,7 @@ class _Page1State extends State<Page1> {
             shape: BoxShape.circle,
             image: DecorationImage(
               image: NetworkImage(
-                  'https://img.duotegame.com/article/contents/2022/10/17/2022101795825615.png'),
+                  'https://img1.baidu.com/it/u=4120075661,439968901&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'),
               fit: BoxFit.cover,
             ),
           ),

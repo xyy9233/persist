@@ -44,7 +44,7 @@ class Page3 extends StatelessWidget {
                 width: 154.w,
                 height: 200.h,
                 child: getImage(
-                    "assets/chengjiu3no.png"
+                    "assets/chengjiu3.png"
                 ),
               ),
             ),
@@ -55,7 +55,29 @@ class Page3 extends StatelessWidget {
                 width: 154.w,
                 height: 200.h,
                 child: getImage(
-                    "assets/chengjiu4no.png"
+                    "assets/chengjiu4.png"
+                ),
+              ),
+            ),
+            Positioned(
+              left: 28.0.w,
+              top: 590.0.h,
+              child: Container(
+                width: 154.w,
+                height: 200.h,
+                child: getImage(
+                    "assets/dengdeng.png"
+                ),
+              ),
+            ),
+            Positioned(
+              left: 211.0.w,
+              top: 590.0.h,
+              child: Container(
+                width: 154.w,
+                height: 200.h,
+                child: getImage(
+                    "assets/dengdeng.png"
                 ),
               ),
             ),

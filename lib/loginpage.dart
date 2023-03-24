@@ -174,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       onTap: () {
-        yinsi(context);/*login();*/
+        login();
       },
     );
   }
