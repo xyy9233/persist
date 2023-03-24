@@ -131,7 +131,6 @@ class _LoginPageState extends State<LoginPage> {
                 child: buildpasswordTextField(context),
               ),
             ),
-
             ///remember me
             Positioned(
               left: 42.0.w,
@@ -152,6 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: getImage("assets/rememberok.png"),
               ),
             ),
+
           ],
         ));
   }
@@ -174,8 +174,27 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       onTap: () {
-        login();
+        yinsi(context);/*login();*/
       },
+    );
+  }
+
+  Widget yinsi(BuildContext context) {
+    return AlertDialog(
+      title: Text('隐私协议'),
+      content: SingleChildScrollView(
+        child: Text('参考别人的隐私协议'),
+      ),
+      actions: [
+        TextButton(
+          child: Text('我已知晓'),
+          onPressed: () {
+            // 点击“我已知晓”按钮后关闭弹窗
+            Navigator.of(context).pop();
+            login();
+          },
+        ),
+      ],
     );
   }
 

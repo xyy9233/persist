@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             ],
             child: MaterialApp(
                 home://Page4(key: Key("注册"), uid: 12)
-              //MyHomePage(key: ValueKey("主页面"), uid: 13,username: "徐一洋",)
+              //MyHomePage(key: ValueKey("主页面"), uid: 12,username: "徐一洋",)
                 //RegistretionPage(key:ValueKey('Registration'), title: '注册',)
               LoginPage(key:ValueKey('登录'), title: '登录')
             ),

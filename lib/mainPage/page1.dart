@@ -434,13 +434,14 @@ class _Page1State extends State<Page1> {
     );
   }
 
+  Map<int, bool> _showOverlayMap = {};
 
-  bool _showOverlay = false;
   Widget buildDailyPlan() {
     return Container(
       child: ListView.builder(
         itemCount: habit.data.length,
         itemBuilder: (BuildContext context, int index) {
+          bool showOverlay = _showOverlayMap[index] ?? false;
           return Container(
             margin: EdgeInsets.only(bottom: 0),
             height: 180.h,
@@ -461,12 +462,12 @@ class _Page1State extends State<Page1> {
                 GestureDetector(
                   onLongPressStart: (_) {
                     setState(() {
-                      _showOverlay = true; // 长按开始，显示覆盖图片
+                      _showOverlayMap[index] = true;  // 长按开始，显示覆盖图片
                     });
                   },
                   onLongPressEnd: (_) {
                     setState(() {
-                      _showOverlay = false; // 长按结束，隐藏覆盖图片
+                      _showOverlayMap[index] = false; // 长按结束，隐藏覆盖图片
                     });
                   },
                   child: Stack(
@@ -494,7 +495,7 @@ class _Page1State extends State<Page1> {
                         ),
                       ),
                       // 使用AnimatedContainer在圆环闭合时缩放并显示habitok.png图片
-                      if (_showOverlay)
+                      if (showOverlay)
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.easeInOut,
